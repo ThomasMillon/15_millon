@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/_nav.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/loue_contrat/add_loue_contrat.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/loue_contrat/edit_loue_contrat.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Creation pages loue_contrat">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/launcher.sh" beforeDir="false" afterPath="$PROJECT_DIR$/launcher.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_projet.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_projet.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/_nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/_nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +21,7 @@
       <list>
         <option value="Flask Main" />
         <option value="HTML File" />
+        <option value="SQL File" />
       </list>
     </option>
   </component>
@@ -52,20 +49,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Database Script.sql_projet.sql.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
+    ],
+    "RunConfigurationTargetLRU": [
+      "da3caa05-23c3-49dc-b739-0d8fb0642539"
+    ]
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Database Script.sql_projet.sql">
+    <configuration name="sql_projet.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/sql_projet.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="da3caa05-23c3-49dc-b739-0d8fb0642539" />
+      <method v="2" />
+    </configuration>
     <configuration name="15_millon" type="Python.FlaskServer">
       <module name="15_millon" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
@@ -82,6 +94,11 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Database Script.sql_projet.sql" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -99,11 +116,34 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732192419739</updated>
-      <workItem from="1732192420884" duration="4427000" />
+      <workItem from="1732192420884" duration="7306000" />
+      <workItem from="1732520669881" duration="5873000" />
     </task>
+    <task id="LOCAL-00001" summary="Création projet + début (layout et navbar)">
+      <option name="closed" value="true" />
+      <created>1732198118561</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732198118561</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Creation pages loue_contrat">
+      <option name="closed" value="true" />
+      <created>1732202086153</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732202086153</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Création projet + début (layout et navbar)" />
+    <MESSAGE value="Creation pages loue_contrat" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creation pages loue_contrat" />
   </component>
 </project>

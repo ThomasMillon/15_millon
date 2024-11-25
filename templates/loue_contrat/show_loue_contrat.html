@@ -18,10 +18,10 @@
 
     {% block body %}
     <h3>Contrats</h3>
-    <a href="/article/add">ajouter un contrat</a>
+    <a href="/contrat/add">ajouter un contrat</a>
     <br><br>
 
-     {% if articles | length >= 1 %}
+     {% if contrats | length >= 1 %}
         <table class="table table-dark table-striped">
             <thead>
               <tr>
@@ -31,26 +31,20 @@
                 <th scope="col">date_debut_contrat</th>
                 <th scope="col">duree_location</th>
                 <th scope="col">tarif</th>
-                <th scope="col">Image</th>
                 <th scope="col">Edition</th>
               </tr>
             </thead>
-            {% for article in articles %}
+            {% for contrat in contrats %}
                 <tr>
-                    <th scope="row">{{ article.id }}</th>
-                    <td>{{ article.nom }}</td>
-                    <td>{{ article.type_article_id }}</td>
-                    <td>{{ article.prix }}</td>
-                    <td>{{ article.stock }}</td>
-                    <td>{{ article.description }}</td>
-                    <td>{%  if article.image is not none and article.image != "" %}
-    <img style="width:40px;height:40px"  src="{{ url_for('static', filename = 'images/' + article['image']) }}"  alt="image  de {{ article.nom }}" >
-{% else %}
-    <img style="width:40px;height:40px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="no image" >
-{% endif %} </td>
+                    <th scope="row">{{ contrat.ID_Contrat }}</th>
+                    <td>{{ contrat.ID_Etudiant }}</td>
+                    <td>{{ contrat.ID_Velo }}</td>
+                    <td>{{ contrat.AAAA_MM_JJ }}</td>
+                    <td>{{ contrat.Duree_location }}</td>
+                    <td>{{ contrat.Tarif }}</td>
                     <td>
-                        <a href="/article/edit?id={{ article.id }}" type="button" class="btn btn-warning">editer</a>
-                        <a href="/article/delete?id={{ article.id }}" type="button" class="btn btn-danger">supprimer</a>
+                        <a href="/contrat/edit?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-warning">editer</a>
+                        <a href="/contrat/delete?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-danger">supprimer</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -60,35 +54,6 @@
     {% endif %}
 
     {% endblock %}
-
-    {'id': 1, 'nom': 'Enveloppes (50p)', 'type_article_id': 1, 'prix': 2, 'stock': 1, 'description': None, 'image': None}
-
-
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Enveloppes(50p)</td>
-            <td>1</td>
-            <td>2</td>
-            <td>1</td>
-            <td>None</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Stylo noir</td>
-            <td>1</td>
-            <td>1</td>
-            <td>10</td>
-            <td>None</td>
-            <td>stylo.jpeg</td>
-          </tr>
-        </tbody>
-      </table>
-
-
-
-
 
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
 

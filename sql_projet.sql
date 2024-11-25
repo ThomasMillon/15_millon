@@ -85,14 +85,15 @@ CREATE TABLE Reparation(
 );
 
 CREATE TABLE Loue___Contrat(
-   ID_Etudiant INT,
-   ID_Velo INT,
-   AAAA_MM_JJ DATE,
-   Duree_location VARCHAR(50),
-   Tarif VARCHAR(50),
-   PRIMARY KEY(ID_Etudiant, ID_Velo, AAAA_MM_JJ),
-   FOREIGN KEY(ID_Etudiant) REFERENCES Etudiant(ID_Etudiant),
-   FOREIGN KEY(ID_Velo) REFERENCES Velo(ID_Velo)
+    ID_Contrat INT AUTO_INCREMENT,
+    ID_Etudiant INT,
+    ID_Velo INT,
+    AAAA_MM_JJ DATE,
+    Duree_location VARCHAR(50),
+    Tarif VARCHAR(50),
+    PRIMARY KEY(ID_Contrat),
+    FOREIGN KEY(ID_Etudiant) REFERENCES Etudiant(ID_Etudiant),
+    FOREIGN KEY(ID_Velo) REFERENCES Velo(ID_Velo)
 );
 
 CREATE TABLE Est_de_Couleur(
@@ -269,31 +270,31 @@ INSERT INTO Est_equippe_de VALUES(21, 1),
                                  (19, 4),
                                  (6, 3);
 
-INSERT INTO Loue___Contrat VALUES(23, 5, '2024-11-14', '2j', '35.5'),
-                                 (12, 16, '2024-11-25', '10h', '12.0'),
-                                 (5, 18, '2024-09-06', '5j', '60.3'),
-                                 (23, 7, '2024-11-18', '2j', '38.9'),
-                                 (2, 5, '2024-12-05', '2j', '35.5'),
-                                 (19, 5, '2024-11-16', '2j', '35.5'),
-                                 (14, 2, '2024-08-09', '5h', '7.2'),
-                                 (1, 3, '2024-11-14', '2j', '33.5'),
-                                 (4, 9, '2024-04-14', '10h', '13.6'),
-                                 (3, 22, '2024-10-01', '2j', '35.5'),
-                                 (6, 1, '2024-09-03', '15j', '120.0'),
-                                 (18, 17, '2024-04-28', '1j', '18.4'),
-                                 (13, 8, '2024-04-05', '2j', '30.5'),
-                                 (9, 15, '2024-09-01', '5j', '62.6'),
-                                 (7, 13, '2024-08-08', '2j', '33.9'),
-                                 (10, 21, '2024-07-07', '12j', '50.0'),
-                                 (8, 19, '2024-06-06', '2j', '39.5'),
-                                 (15, 4, '2024-11-12', '5h', '8.0'),
-                                 (11, 22, '2024-05-05', '10h', '15.6'),
-                                 (14, 9, '2024-04-15', '2j', '34.5'),
-                                 (16, 20, '2024-11-24', '3j', '48.0'),
-                                 (17, 19, '2024-01-01', '100j', '1500.0'),
-                                 (20, 11, '2024-03-20', '2j', '32.5'),
-                                 (21, 6, '2024-12-01', '5h', '7.4'),
-                                 (22, 17, '2024-10-30', '10h', '18.1');
+INSERT INTO Loue___Contrat VALUES(NULL,23, 5, '2024-11-14', '2j', '35.5'),
+                                 (NULL,12, 16, '2024-11-25', '10h', '12.0'),
+                                 (NULL,5, 18, '2024-09-06', '5j', '60.3'),
+                                 (NULL,23, 7, '2024-11-18', '2j', '38.9'),
+                                 (NULL,2, 5, '2024-12-05', '2j', '35.5'),
+                                 (NULL,19, 5, '2024-11-16', '2j', '35.5'),
+                                 (NULL,14, 2, '2024-08-09', '5h', '7.2'),
+                                 (NULL,1, 3, '2024-11-14', '2j', '33.5'),
+                                 (NULL,4, 9, '2024-04-14', '10h', '13.6'),
+                                 (NULL,3, 22, '2024-10-01', '2j', '35.5'),
+                                 (NULL,6, 1, '2024-09-03', '15j', '120.0'),
+                                 (NULL,18, 17, '2024-04-28', '1j', '18.4'),
+                                 (NULL,13, 8, '2024-04-05', '2j', '30.5'),
+                                 (NULL,9, 15, '2024-09-01', '5j', '62.6'),
+                                 (NULL,7, 13, '2024-08-08', '2j', '33.9'),
+                                 (NULL,10, 21, '2024-07-07', '12j', '50.0'),
+                                 (NULL,8, 19, '2024-06-06', '2j', '39.5'),
+                                 (NULL,15, 4, '2024-11-12', '5h', '8.0'),
+                                 (NULL,11, 22, '2024-05-05', '10h', '15.6'),
+                                 (NULL,14, 9, '2024-04-15', '2j', '34.5'),
+                                 (NULL,16, 20, '2024-11-24', '3j', '48.0'),
+                                 (NULL,17, 19, '2024-01-01', '100j', '1500.0'),
+                                 (NULL,20, 11, '2024-03-20', '2j', '32.5'),
+                                 (NULL,21, 6, '2024-12-01', '5h', '7.4'),
+                                 (NULL,22, 17, '2024-10-30', '10h', '18.1');
 
 
 
@@ -314,7 +315,7 @@ FROM Etudiant
          JOIN Loue___Contrat ON Etudiant.ID_Etudiant = Loue___Contrat.ID_Etudiant
 GROUP BY Etudiant.ID_Etudiant;
 
-#Lister les vélos équipés de chaque type d'équipement
+#Lister les vélos équipés de chaque type d équipement
 SELECT Velo.ID_Velo, Equipement.Libelle_Equipement
 FROM Velo
          JOIN Est_equippe_de ON Velo.ID_Velo = Est_equippe_de.ID_Velo
@@ -363,7 +364,7 @@ FROM Piece
 GROUP BY Piece.Libelle_Piece
 ORDER BY Cout_Total;
 
-#Affiche tous les Vélos qui on été loué derant le mois d'avril en 2024
+#Affiche tous les Vélos qui on été loué derant le mois d avril en 2024
 SELECT Velo.ID_Velo, Loue___Contrat.AAAA_MM_JJ
 FROM Velo
          JOIN Loue___Contrat ON Velo.ID_Velo = Loue___Contrat.ID_Velo
