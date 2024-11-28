@@ -2,9 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Formulaire d'Edition d'un contrat</title>
 </head>
 <body>
-
+    <div>
+        <h1>Formulaire d'Edition d'un contrat</h1>
+        <form action="/contrat/edit" method="post">
+            <input type="hidden" name="id" value="{{ contrat.ID_Contrat }}" >
+            <div>
+                <label for="etudiant">ID de l'étudiant</label>
+                <input type="number" id="etudiant" required value="{{ contrat.ID_Etudiant }}" name="etudiant">
+            </div>
+            <div>
+                <label for="velo">ID du velo</label>
+                <input type="number" id="velo" required value="{{ contrat.ID_Velo }}" name="velo">
+            </div>
+            <div>
+                <label for="date_debut">Date de début du contrat</label>
+                <input type="date" id="date_debut" required value="{{ contrat.AAAA_MM_JJ }}" name="date_debut">
+            </div>
+            <div>
+                <label for="duree">Duree du contrat</label>
+                <input type="text" id="duree" required value="{{ contrat.Duree_location }}" name="duree">
+            </div>
+            <div>
+                <label for="tarif">Tarif du contrat</label>
+                <input type="number" step="0.01" required value="{{ contrat.Tarif }}" name="tarif">
+            </div>
+            <button type="submit">Enregistrer</button>
+        </form>
+    </div>
 </body>
 </html>
