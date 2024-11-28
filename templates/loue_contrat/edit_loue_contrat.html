@@ -11,11 +11,19 @@
             <input type="hidden" name="id" value="{{ contrat.ID_Contrat }}" >
             <div>
                 <label for="etudiant">ID de l'étudiant</label>
-                <input type="number" id="etudiant" required value="{{ contrat.ID_Etudiant }}" name="etudiant">
+                <select name="etudiant" required>
+                    {% for etudiant in etudiants %}
+                        <option value="{{ etudiant.ID_Etudiant }}" {% if etudiant.ID_Etudiant == contrat.ID_Etudiant %}selected{% endif %}>{{ etudiant.ID_Etudiant }} {{ etudiant.Nom }} {{ etudiant.Prenom }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div>
                 <label for="velo">ID du velo</label>
-                <input type="number" id="velo" required value="{{ contrat.ID_Velo }}" name="velo">
+                <select name="velo" required>
+                    {% for velo in velos %}
+                        <option value="{{ velo.ID_Velo }}" {% if velo.ID_Velo == contrat.ID_Velo %}selected{% endif %}>{{ velo.ID_Velo }} {{ velo.Libelle_Modele }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div>
                 <label for="date_debut">Date de début du contrat</label>

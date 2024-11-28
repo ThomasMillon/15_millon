@@ -98,9 +98,26 @@ def edit_contrat():
         mycursor.execute(sql, tuple_param)
         get_db().commit()
         contrat = mycursor.fetchone()
+        mycursor = get_db().cursor()
+        sql = '''
+            SELECT ID_Etudiant, Nom, Prenom
+            FROM Etudiant
+            ORDER BY Nom;
+            '''
+        mycursor.execute(sql)
+        etudiants = mycursor.fetchall()
+        sql = '''
+            SELECT Velo.ID_Velo, Type_de_Modele.Libelle_Modele
+            FROM Velo
+            JOIN Type_de_Modele
+            ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+            ORDER BY Type_de_Modele.ID_Modele;
+            '''
+        mycursor.execute(sql)
+        velos = mycursor.fetchall()
     else :
         contrat = []
-    return render_template('loue_contrat/edit_loue_contrat.html', contrat=contrat)
+    return render_template('loue_contrat/edit_loue_contrat.html', contrat=contrat, etudiants=etudiants, velos=velos)
 
 @app.route('/contrat/add', methods=['POST'])
 def valid_add_contrat():
