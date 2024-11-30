@@ -1,19 +1,26 @@
 <!doctype html>
 <html lang="fr">
+
+<html>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% block title %}
-        <title>layout</title>
-    {% endblock %}
+    <title>{% block title %}layout{% endblock %}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/klippan.png') }}" >
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ url_for('static', filename='mes_styles.css') }}" >
         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" >
     {% endblock %}
 </head>
+
 <body>
 {% include('_nav.html') %}
+
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
     {% for categorie, message in messages %}
@@ -27,6 +34,7 @@
 {% block body %}
     <h3 style="color:blue">Vélo Campus</h3>
 {% endblock %}
+
 {% block javascripts %}
     {#<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>#}
 {% endblock %}
