@@ -14,10 +14,10 @@ import pymysql.cursors
 def get_db():
     if 'db' not in g:
         g.db =  pymysql.connect(
-            host="serveurmysql.iut-bm.univ-fcomte.fr",                 # à modifier
-            user="tmillon",                     # à modifier
-            password="mdp",                # à modifier
-            database="BDD_tmillon",        # à modifier
+            host="serveurmysql.iut-bm.univ-fcomte.fr",
+            user="tmillon",
+            password="mdp",
+            database="BDD_tmillon",
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
@@ -30,7 +30,7 @@ def teardown_db(exception):
         db.close()
 
 @app.route('/', methods=['GET'])
-def show_layout():  # put application's code here
+def show_layout():
     return render_template('layout.html')
 
 
@@ -42,13 +42,50 @@ if __name__ == '__main__':
 def show_loue_contrat():
     mycursor = get_db().cursor()
     sql = '''
-    SELECT ID_Contrat, ID_Etudiant, ID_Velo, AAAA_MM_JJ, Duree_location, Tarif
+    SELECT Loue___Contrat.ID_Contrat, Loue___Contrat.ID_Etudiant, Loue___Contrat.ID_Velo, Loue___Contrat.AAAA_MM_JJ, Loue___Contrat.Duree_location, Loue___Contrat.Tarif, Etudiant.Nom, Type_de_Modele.Libelle_Modele
      FROM Loue___Contrat
+     LEFT JOIN Velo
+     ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+    JOIN Type_de_Modele
+    ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+    JOIN Etudiant
+    ON Loue___Contrat.ID_Etudiant = Etudiant.ID_Etudiant
      ORDER BY AAAA_MM_JJ DESC;
      '''
     mycursor.execute(sql)
     Loue___Contrat = mycursor.fetchall()
-    return render_template('loue_contrat/show_loue_contrat.html', contrats=Loue___Contrat)
+    sql = '''
+    SELECT Marque.Libelle_Marque, COUNT(Marque.ID_Marque) AS nbmLoue
+    FROM Loue___Contrat
+    LEFT JOIN Velo
+    ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+    JOIN Type_de_Modele
+    ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+    JOIN Marque
+    ON Type_de_Modele.ID_Marque = Marque.ID_Marque
+    WHERE MONTH(Loue___Contrat.AAAA_MM_JJ) = MONTH(NOW())
+    GROUP BY Marque.ID_Marque
+    ORDER BY nbmLoue DESC;
+    '''
+    mycursor.execute(sql)
+    meilleureMarque = mycursor.fetchall()
+
+    sql = '''
+        SELECT Marque.Libelle_Marque, COUNT(Marque.ID_Marque) AS nbmLoue
+        FROM Loue___Contrat
+        LEFT JOIN Velo
+        ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+        JOIN Type_de_Modele
+        ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+        JOIN Marque
+        ON Type_de_Modele.ID_Marque = Marque.ID_Marque
+        WHERE MONTH(Loue___Contrat.AAAA_MM_JJ) = MONTH(DATE_ADD(NOW(), INTERVAL -1 MONTH))
+        GROUP BY Marque.ID_Marque
+        ORDER BY nbmLoue DESC;
+        '''
+    mycursor.execute(sql)
+    moisDernier = mycursor.fetchall()
+    return render_template('loue_contrat/show_loue_contrat.html', contrats=Loue___Contrat, marque=meilleureMarque, moisDernier=moisDernier)
 
 @app.route('/contrat/add', methods=['GET'])
 def add_contrat():
@@ -87,7 +124,6 @@ def edit_contrat():
     id=request.args.get('id', '')
 
     if id != None :
-        id = int(id)
         mycursor = get_db().cursor()
         sql = '''
         SELECT ID_Contrat, ID_Etudiant, ID_Velo, AAAA_MM_JJ, Duree_location, Tarif

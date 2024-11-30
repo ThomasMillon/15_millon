@@ -370,9 +370,9 @@ FROM Velo
          JOIN Loue___Contrat ON Velo.ID_Velo = Loue___Contrat.ID_Velo
 WHERE Loue___Contrat.AAAA_MM_JJ BETWEEN '2024-04-01' AND '2024-04-30';
 
-#affiche les mois ou il y a eu le plus de location en 2024
-SELECT MONTH(Loue___Contrat.AAAA_MM_JJ) AS Mois, COUNT(*) AS Nombre_Locations
+#affiche les jours ou il y a eu le plus de location en 2024
+SELECT MONTH(Loue___Contrat.AAAA_MM_JJ) AS Jour, COUNT(*) AS Nombre_Locations
 FROM Loue___Contrat
 WHERE YEAR(Loue___Contrat.AAAA_MM_JJ) = 2024
-GROUP BY Mois
+GROUP BY Jour
 ORDER BY Nombre_Locations DESC;

@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Fin fonctions de bases (contrat)">
+    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Menus déroulants (Contrat)">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_24,_3_07 PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_24__3_07PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/edit_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/edit_loue_contrat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql_projet.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_projet.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +26,17 @@
         <option value="HTML File" />
         <option value="SQL File" />
       </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
     </option>
   </component>
   <component name="Git.Settings">
@@ -100,8 +117,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
-        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.24807.21" />
+        <option value="bundled-python-sdk-00717045f1d3-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.24807.21" />
       </set>
     </attachedChunks>
   </component>
@@ -116,7 +133,8 @@
       <workItem from="1732192420884" duration="7306000" />
       <workItem from="1732520669881" duration="7127000" />
       <workItem from="1732700275980" duration="6284000" />
-      <workItem from="1732778542712" duration="16042000" />
+      <workItem from="1732778542712" duration="22089000" />
+      <workItem from="1732973028654" duration="8983000" />
     </task>
     <task id="LOCAL-00001" summary="Création projet + début (layout et navbar)">
       <option name="closed" value="true" />
@@ -158,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732802412201</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Menus déroulants (Contrat)">
+      <option name="closed" value="true" />
+      <created>1732805760945</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732805760945</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +195,7 @@
     <MESSAGE value="Creation pages loue_contrat" />
     <MESSAGE value="Création routes" />
     <MESSAGE value="Fin fonctions de bases (contrat)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fin fonctions de bases (contrat)" />
+    <MESSAGE value="Menus déroulants (Contrat)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menus déroulants (Contrat)" />
   </component>
 </project>

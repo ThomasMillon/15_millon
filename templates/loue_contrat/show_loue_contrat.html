@@ -21,37 +21,43 @@
     <a href="/contrat/add">ajouter un contrat</a>
     <br><br>
 
-     {% if contrats | length >= 1 %}
-        <table class="table table-dark table-striped">
-            <thead>
-              <tr>
-                <th scope="col">id_contrat</th>
-                <th scope="col">id_etudiant</th>
-                <th scope="col">id_velo</th>
-                <th scope="col">date_debut_contrat</th>
-                <th scope="col">duree_location</th>
-                <th scope="col">tarif</th>
-                <th scope="col">Edition</th>
-              </tr>
-            </thead>
-            {% for contrat in contrats %}
-                <tr>
-                    <th scope="row">{{ contrat.ID_Contrat }}</th>
-                    <td>{{ contrat.ID_Etudiant }}</td>
-                    <td>{{ contrat.ID_Velo }}</td>
-                    <td>{{ contrat.AAAA_MM_JJ }}</td>
-                    <td>{{ contrat.Duree_location }}</td>
-                    <td>{{ contrat.Tarif }}</td>
-                    <td>
-                        <a href="/contrat/edit?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-warning">editer</a>
-                        <a href="/contrat/delete?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-danger">supprimer</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <h2> la liste des types est vide </h2>
-    {% endif %}
+         {% if contrats | length >= 1 %}
+            <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">id_contrat</th>
+                    <th scope="col">id_etudiant</th>
+                    <th scope="col">id_velo</th>
+                    <th scope="col">date_debut_contrat</th>
+                    <th scope="col">duree_location</th>
+                    <th scope="col">tarif</th>
+                    <th scope="col">Edition</th>
+                  </tr>
+                </thead>
+                {% for contrat in contrats %}
+                    <tr>
+                        <th scope="row">{{ contrat.ID_Contrat }}</th>
+                        <td>{{ contrat.ID_Etudiant }} {{ contrat.Nom }}</td>
+                        <td>{{ contrat.ID_Velo }} {{ contrat.Libelle_Modele }}</td>
+                        <td>{{ contrat.AAAA_MM_JJ }}</td>
+                        <td>{{ contrat.Duree_location }}</td>
+                        <td>{{ contrat.Tarif }}</td>
+                        <td>
+                            <a href="/contrat/edit?id={{ contrat.ID_Contrat }}" type="button">editer</a>
+                            <a href="/contrat/delete?id={{ contrat.ID_Contrat }}" type="button">supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h2> la liste des types est vide </h2>
+        {% endif %}
+
+        <a> La marque la plus demandée ce mois-ci est : {{ marque[0].Libelle_Marque }} avec {{ marque[0].nbmLoue }} location{% if marque[0].nbmLoue > 1 %}s{% endif %}</a>
+        <br>
+        <a> La marque la plus demandée le mois dernier était {{ moisDernier[0].Libelle_Marque }} avec {{ moisDernier[0].nbmLoue }} location{% if moisDernier[0].nbmLoue > 1 %}s{% endif %}</a>
+
+
 
     {% endblock %}
 
