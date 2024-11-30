@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+{% block title %}
+    Formulaire d'ajout d'une réparation
+{% endblock %}
+<br>
+{% block body %}
+    <div>
+        <h1>Formulaire d'ajout de réparation</h1>
+        <form class="mb-3" action="/reparation/add" method="post">
+            <div>
+                <label class="form-label" for="prix">Prix total de la réparation</label>
+                <input class="form-control" type="number" id="prix" placeholder="Entrez le prix total de la réparation" required name="prix">
+            </div>
+            <br>
+            <div>
+                <label class="form-label" for="date">Date de réparation</label>
+                <input class="form-control" type="date" id="date" placeholder="Entrez la date de la réparation" required name="date">
+            </div>
+            <br>
+            <div> <!--transformer en liste déroulante -->
+                <label class="form-label" for="velo">Id du vélo :</label>
+                <select class="form-label" name="velo" required>
+                    <option value="">Séléctionnez un id de vélo</option>
+                    {% for velo in velos %}
+                        <option value="{{ velo.ID_Velo }}">{{ velo.ID_Velo }} {{ velo.Libelle_Modele }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+            <div> <!--transformer en liste déroulante -->
+                <label class="form-label" for="type">Id du type de réparation :</label>
+                <select class="form-label" name="type" required>
+                    <option value="">Séléctionnez un type de réparation</option>
+                    {% for type in types %}
+                        <option value="{{ type.ID_Type }}">{{ type.ID_Type }} {{ type.Libelle_Type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+            <input type="submit" value="Créer" name="Valider">
+        </form>
+    </div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
