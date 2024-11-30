@@ -18,8 +18,9 @@
                 <th>Id_reparation</th>
                 <th>Prix_total</th>
                 <th>Date_reparation</th>
-                <th>Id_velo</th>
+                <th>Id_velo / Modèle</th>
                 <th>Id_type_reparation</th>
+                <th>Pieces Changée</th>
                 <th>Opération</th>
             </tr>
             </thead>
@@ -28,10 +29,29 @@
                 {% for reparation in reparations %}
                     <tr>
                         <th>{{ reparation.ID_Reparation }}</th>
-                        <td>{{ reparation.Prix_Total }}</td>
+                        <td>{{ reparation.Prix_Total }} €</td>
                         <td>{{ reparation.Date_Reparation }}</td>
-                        <td>{{ reparation.ID_Velo }}</td>
-                        <td>{{ reparation.ID_Type }}</td>
+                        <td class="btn-group-toggle" data-toggle="buttons">
+                            <div class="btn btn-secondary active">
+                                {{ reparation.ID_Velo }}
+                            </div>
+                            <div class="btn btn-secondary">
+                                {{ reparation.Libelle_Modele }}
+                            </div>
+                        </td>
+                        <td class="btn-group-toggle" data-toggle="buttons">
+                            <div class="btn btn-light active">
+                                {{ reparation.ID_Type }}
+                            </div>
+                            <div class="btn btn-light">
+                                {{ reparation.Libelle_Type }}
+                            </div>
+                        </td>
+                        <td class="btn-group-toggle" data-toggle="buttons">
+                            <div class="btn btn-secondary active">
+                                {{ reparation.NbPiece }}
+                            </div>
+                        </td>
                         <td>
                             <a href="/reparation/edit?id=   {{ reparation.ID_Reparation }}" type="button" class="btn btn-warning"> editer    </a>
                             <a href="/reparation/delete?id= {{ reparation.ID_Reparation }}" type="button" class="btn btn-danger" > supprimer </a>
@@ -50,12 +70,29 @@
     </div>
     <br>
     <div class="footer-message alert alert-info text-center">
-        {% if marque %}
-            <p>La marque <b>{{ marque.Libelle_Marque }}</b> a le plus de réparations avec <b>{{ marque.Nombre_Reparations }}</b> interventions.</p>
+        {% if modele %}
+            <p>Le modèle <b>{{ modele.Libelle_Modele }}</b> a le plus de réparations avec <b>{{ modele.Nombre_Reparations }} interventions</b>.</p>
         {% else %}
             <p>Aucune réparation enregistrée pour l'instant.</p>
         {% endif %}
     </div>
+    <br>
+    <div class="footer-message alert alert-info text-center">
+        {% if prix_moyen is not none %}
+            <p>En <b>moyenne</b>, une réparation coûte : <b>{{ prix_moyen['Prix_Moyen'] }} €</b></p>
+        {% else %}
+            <p>Aucune réparation enregistrée pour calculer le prix moyen.</p>
+        {% endif %}
+    </div>
+    <br>
+    <div class="footer-message alert alert-info text-center">
+        {% if modele %}
+            <p>Le modèle <b>{{ prix_cher.Libelle_Modele }}</b> coûte le plus cher en réparation et coûte <b>{{ prix_cher.Prix }} €</b> en moyenne.</p>
+        {% else %}
+            <p>Aucune réparation enregistrée pour l'instant.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
 

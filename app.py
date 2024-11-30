@@ -206,28 +206,57 @@ def valid_edit_contrat():
 def show_reparation():
     mycursor = get_db().cursor()
     sql = '''
-    SELECT ID_Reparation, Prix_Total, Date_Reparation, ID_Velo, ID_Type
+    SELECT Reparation.ID_Reparation, Reparation.Prix_Total, Reparation.Date_Reparation, Reparation.ID_Velo, Type_de_Modele.Libelle_Modele, Reparation.ID_Type, TypeReparation.Libelle_Type, COUNT(Piece.ID_Piece) AS NbPiece
      FROM Reparation
+     JOIN Velo ON Reparation.ID_Velo = Velo.ID_Velo
+     JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+     JOIN TypeReparation ON Reparation.ID_Type = TypeReparation.ID_Type
+     JOIN Change_piece ON Reparation.ID_Reparation = Change_piece.ID_Reparation
+     JOIN Piece ON Change_piece.ID_Piece = Piece.ID_Piece
+     GROUP BY Reparation.ID_Reparation
      ORDER BY Date_Reparation DESC'''
     mycursor.execute(sql)
     Reparation = mycursor.fetchall()
     mycursor = get_db().cursor()
     sql = '''
-            SELECT Marque.Libelle_Marque, COUNT(Reparation.ID_Reparation) AS Nombre_Reparations
+            SELECT Type_de_Modele.Libelle_Modele, COUNT(Reparation.ID_Reparation) AS Nombre_Reparations
             FROM Reparation
-            JOIN Velo
-            ON Reparation.ID_Velo = Velo.ID_Velo
+            JOIN Velo ON Reparation.ID_Velo = Velo.ID_Velo
             JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
-            JOIN Marque ON Type_de_Modele.ID_Marque = Marque.ID_Marque
-            GROUP BY Marque.Libelle_Marque
-            ORDER BY Nombre_Reparations
-            DESC LIMIT 1;
+            GROUP BY Type_de_Modele.Libelle_Modele
+            ORDER BY Nombre_Reparations DESC
+            LIMIT 1;
         '''
     mycursor.execute(sql)
-    resultat = mycursor.fetchone()
-    if resultat is None:
-        resultat = {'Libelle_Marque': 'Aucune marque', 'Nombre_Reparations': 0}
-    return render_template('reparation/show_reparation.html', reparations=Reparation, marque=resultat)
+    modele = mycursor.fetchone()
+
+    # Si aucun modèle n'est trouvé (pas de réparations), on envoie un message par défaut
+    if modele is None:
+        modele = {'Libelle_Modele': 'Aucun modèle', 'Nombre_Reparations': 0}
+
+    mycursor = get_db().cursor()
+    sql = '''
+            SELECT ROUND(AVG(Prix_Total), 2) AS Prix_Moyen
+            FROM Reparation;
+        '''
+    mycursor.execute(sql)
+    prix_moyen = mycursor.fetchone()
+    print(prix_moyen)
+
+    mycursor = get_db().cursor()
+    sql = '''
+            SELECT Type_de_Modele.Libelle_Modele, ROUND(AVG(Reparation.Prix_Total), 2) AS Prix
+            FROM Reparation
+            JOIN Velo ON Reparation.ID_Velo = Velo.ID_Velo
+            JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+            GROUP BY Type_de_Modele.Libelle_Modele
+            ORDER BY Prix DESC
+            LIMIT 1;
+    '''
+    mycursor.execute(sql)
+    modele_cher = mycursor.fetchone()
+
+    return render_template('reparation/show_reparation.html', reparations=Reparation, modele=modele, prix_moyen=prix_moyen, prix_cher=modele_cher)
 
 
 @app.route('/reparation/add', methods=['GET'])
@@ -278,7 +307,7 @@ def delete_reparation():
     tuple_param = (id)
     change = mycursor.execute(sql, tuple_param)
     if change > 0:
-        message = "Impossible de supprimer la réparation d'id : " + id + " ! Car une instance de l'entité 'Reparation' est utilisé dans l'entité 'Change_piece ! "
+        message = "Impossible de supprimer la réparation d'id : " + id + " car elle est utilisée dans l'entité 'Change_piece'"
         flash(message, 'alert-warning')
     else :
         mycursor = get_db().cursor()
