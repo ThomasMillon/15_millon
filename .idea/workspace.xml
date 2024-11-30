@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Menus déroulants (Contrat)">
+      <change afterPath="$PROJECT_DIR$/launcher.ps1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_24,_3_07 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_24__3_07PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_projet.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_projet.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reparation/show_reparation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reparation/show_reparation.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,14 +48,16 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/ThomasMillon/15_millon.git&quot;,
-    &quot;accountId&quot;: &quot;337baa50-d80a-4d50-a66b-bf32c78c9989&quot;
+    &quot;accountId&quot;: &quot;82f1eff6-e2d6-48ae-80bb-811b64436582&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2p9y7eggs6lE90kob4EuiRS6BAZ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -67,8 +66,12 @@
   &quot;keyToString&quot;: {
     &quot;Database Script.sql_projet.sql.executor&quot;: &quot;Run&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;PowerShell.launcher.ps1.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/matgr/Documents/GitHub/Tmillon_Flask&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,11 +88,20 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Database Script.sql_projet.sql">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\matgr\Documents\GitHub\Tmillon_Flask" />
+    </key>
+  </component>
+  <component name="RunManager" selected="PowerShell.launcher.ps1">
     <configuration name="sql_projet.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/sql_projet.sql" />
       <script-mode>FILE</script-mode>
       <data-source id="da3caa05-23c3-49dc-b739-0d8fb0642539" />
+      <method v="2" />
+    </configuration>
+    <configuration name="launcher.ps1" type="PowerShellRunType" factoryName="PowerShell" temporary="true" scriptUrl="$PROJECT_DIR$/launcher.ps1" executablePath="$PROJECT_DIR$/../../../../../Windows/System32/WindowsPowerShell/v1.0/powershell.exe">
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="15_millon" type="Python.FlaskServer">
@@ -110,6 +122,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PowerShell.launcher.ps1" />
         <item itemvalue="Database Script.sql_projet.sql" />
       </list>
     </recent_temporary>
@@ -117,8 +130,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.24807.21" />
-        <option value="bundled-python-sdk-00717045f1d3-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.24807.21" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
+        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
       </set>
     </attachedChunks>
   </component>
@@ -135,6 +148,8 @@
       <workItem from="1732700275980" duration="6284000" />
       <workItem from="1732778542712" duration="22089000" />
       <workItem from="1732973028654" duration="8983000" />
+      <workItem from="1732988472824" duration="360000" />
+      <workItem from="1732989080161" duration="1299000" />
     </task>
     <task id="LOCAL-00001" summary="Création projet + début (layout et navbar)">
       <option name="closed" value="true" />

@@ -12,7 +12,7 @@
     <br><br>
 
     <div class="tableau overflow-hidden">
-        <table class="table table-dark">
+        <table class="table table-dark table-striped">
             <thead class="thead-dark">
             <tr>
                 <th>Id_reparation</th>
@@ -48,6 +48,15 @@
             </tbody>
         </table>
     </div>
+    <br>
+    <div class="footer-message alert alert-info text-center">
+        {% if marque %}
+            <p>La marque <b>{{ marque.Libelle_Marque }}</b> a le plus de réparations avec <b>{{ marque.Nombre_Reparations }}</b> interventions.</p>
+        {% else %}
+            <p>Aucune réparation enregistrée pour l'instant.</p>
+        {% endif %}
+    </div>
+
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

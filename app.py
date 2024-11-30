@@ -211,7 +211,23 @@ def show_reparation():
      ORDER BY Date_Reparation DESC'''
     mycursor.execute(sql)
     Reparation = mycursor.fetchall()
-    return render_template('reparation/show_reparation.html', reparations=Reparation)
+    mycursor = get_db().cursor()
+    sql = '''
+            SELECT Marque.Libelle_Marque, COUNT(Reparation.ID_Reparation) AS Nombre_Reparations
+            FROM Reparation
+            JOIN Velo
+            ON Reparation.ID_Velo = Velo.ID_Velo
+            JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+            JOIN Marque ON Type_de_Modele.ID_Marque = Marque.ID_Marque
+            GROUP BY Marque.Libelle_Marque
+            ORDER BY Nombre_Reparations
+            DESC LIMIT 1;
+        '''
+    mycursor.execute(sql)
+    resultat = mycursor.fetchone()
+    if resultat is None:
+        resultat = {'Libelle_Marque': 'Aucune marque', 'Nombre_Reparations': 0}
+    return render_template('reparation/show_reparation.html', reparations=Reparation, marque=resultat)
 
 
 @app.route('/reparation/add', methods=['GET'])
