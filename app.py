@@ -206,13 +206,11 @@ def valid_edit_contrat():
 def show_reparation():
     mycursor = get_db().cursor()
     sql = '''
-    SELECT Reparation.ID_Reparation, Reparation.Prix_Total, Reparation.Date_Reparation, Reparation.ID_Velo, Type_de_Modele.Libelle_Modele, Reparation.ID_Type, TypeReparation.Libelle_Type, COUNT(Piece.ID_Piece) AS NbPiece
+    SELECT Reparation.ID_Reparation, Reparation.Prix_Total, Reparation.Date_Reparation, Reparation.ID_Velo, Type_de_Modele.Libelle_Modele, Reparation.ID_Type, TypeReparation.Libelle_Type
      FROM Reparation
      JOIN Velo ON Reparation.ID_Velo = Velo.ID_Velo
      JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
      JOIN TypeReparation ON Reparation.ID_Type = TypeReparation.ID_Type
-     JOIN Change_piece ON Reparation.ID_Reparation = Change_piece.ID_Reparation
-     JOIN Piece ON Change_piece.ID_Piece = Piece.ID_Piece
      GROUP BY Reparation.ID_Reparation
      ORDER BY Date_Reparation DESC'''
     mycursor.execute(sql)
