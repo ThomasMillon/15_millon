@@ -37,7 +37,9 @@ def show_layout():
 if __name__ == '__main__':
     app.run()
 
-
+"""
+==========Loue / Contrat==========
+"""
 @app.route('/contrat/show', methods=['GET'])
 def show_loue_contrat():
     mycursor = get_db().cursor()
@@ -190,3 +192,145 @@ def valid_edit_contrat():
     mycursor.execute(sql, tuple_param)
     get_db().commit()
     return redirect('/contrat/show')
+
+
+"""
+==========Modèle==========
+"""
+
+
+"""
+==========Réparation==========
+"""
+@app.route('/reparation/show', methods=['GET'])
+def show_reparation():
+    mycursor = get_db().cursor()
+    sql = '''
+    SELECT ID_Reparation, Prix_Total, Date_Reparation, ID_Velo, ID_Type
+     FROM Reparation
+     ORDER BY Date_Reparation DESC'''
+    mycursor.execute(sql)
+    Reparation = mycursor.fetchall()
+    return render_template('reparation/show_reparation.html', reparations=Reparation)
+
+
+@app.route('/reparation/add', methods=['GET'])
+def add_reparation():
+    mycursor = get_db().cursor()
+    sql='''
+    SELECT Velo.ID_Velo, Type_de_Modele.Libelle_Modele
+    FROM Velo
+    JOIN Type_de_Modele
+    ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+    ORDER BY Velo.ID_Velo;
+    '''
+    mycursor.execute(sql)
+    velos = mycursor.fetchall()
+    sql='''
+    SELECT ID_Type, Libelle_Type
+    FROM TypeReparation
+    ORDER BY ID_Type;
+    '''
+    mycursor.execute(sql)
+    types = mycursor.fetchall()
+    return render_template('reparation/add_reparation.html', velos = velos , types = types)
+
+@app.route('/reparation/add', methods=['POST'])
+def valid_add_reparation():
+    prix = request.form.get('prix','')
+    date = request.form.get('date', '')
+    velo = request.form.get('velo', '')
+    type = request.form.get('type', '')
+
+    mycursor = get_db().cursor()
+    sql = '''
+    INSERT INTO Reparation(ID_Reparation, Prix_Total, Date_Reparation, ID_Velo, ID_Type) VALUES (NULL, %s, %s, %s, %s);
+    '''
+    tuple_param = (prix, date, velo, type)
+    mycursor.execute(sql, tuple_param)
+    get_db().commit()
+    return redirect('/reparation/show')
+
+@app.route('/reparation/delete')
+def delete_reparation():
+    id=request.args.get('id')
+    mycursor = get_db().cursor()
+    sql = '''
+    SELECT ID_Reparation
+    FROM Change_piece
+    WHERE ID_Reparation = %s'''
+    tuple_param = (id)
+    change = mycursor.execute(sql, tuple_param)
+    if change > 0:
+        message = "Impossible de supprimer la réparation d'id : " + id + " ! Car une instance de l'entité 'Reparation' est utilisé dans l'entité 'Change_piece ! "
+        flash(message, 'alert-warning')
+    else :
+        mycursor = get_db().cursor()
+        sql = '''
+        DELETE FROM Reparation WHERE ID_Reparation = %s
+        '''
+        tuple_param = (id)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+    return redirect('/reparation/show')
+
+
+@app.route('/reparation/edit', methods=['GET'])
+def edit_reparation():
+    id=request.args.get('id', '')
+
+    if id != None :
+        id = int(id)
+        mycursor = get_db().cursor()
+        sql = '''
+        SELECT ID_Reparation, Prix_Total, Date_Reparation, ID_Velo, ID_Type
+        FROM Reparation
+        WHERE ID_Reparation = %s;
+        '''
+        tuple_param = (id)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+        reparation = mycursor.fetchone()
+        mycursor = get_db().cursor()
+        sql = '''
+            SELECT Velo.ID_Velo, Type_de_Modele.Libelle_Modele
+            FROM Velo
+            JOIN Type_de_Modele
+            ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+            ORDER BY Velo.ID_Velo;
+            '''
+        mycursor.execute(sql)
+        velos = mycursor.fetchall()
+        sql = '''
+            SELECT ID_Type, Libelle_Type
+            FROM TypeReparation
+            ORDER BY ID_Type;
+            '''
+        mycursor.execute(sql)
+        types = mycursor.fetchall()
+    else :
+        reparation = []
+    return render_template('reparation/edit_reparation.html', reparation=reparation, velos=velos, types=types)
+
+
+@app.route('/reparation/edit', methods=['POST'])
+def valid_edit_reparation():
+    id = request.form.get('id')
+    prix = request.form.get('prix')
+    date = request.form.get('date')
+    velo = request.form.get('velo')
+    type = request.form.get('type')
+
+    mycursor = get_db().cursor()
+    sql = '''
+    UPDATE Reparation SET Prix_Total = %s, Date_Reparation = %s, ID_Velo = %s, ID_Type = %s WHERE ID_Reparation = %s;
+    '''
+    tuple_param = (prix, date, velo, type, id)
+    mycursor.execute(sql, tuple_param)
+    get_db().commit()
+    return redirect('/reparation/show')
+
+
+"""
+==========Vélo==========
+"""
