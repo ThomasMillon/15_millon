@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS Est_equippe_de;
 DROP TABLE IF EXISTS Change_piece;
-DROP TABLE IF EXISTS Est_de_Couleur;
+
 DROP TABLE IF EXISTS Loue___Contrat;
 DROP TABLE IF EXISTS Reparation;
 DROP TABLE IF EXISTS Velo;
@@ -62,7 +62,6 @@ CREATE TABLE Type_de_Modele(
    ID_Modele INT AUTO_INCREMENT,
    Libelle_Modele VARCHAR(50),
    ID_Marque INT NOT NULL,
-   Vitesse_max INT,
    PRIMARY KEY(ID_Modele),
    FOREIGN KEY(ID_Marque) REFERENCES Marque(ID_Marque)
 );
@@ -70,8 +69,11 @@ CREATE TABLE Type_de_Modele(
 CREATE TABLE Velo(
    ID_Velo INT AUTO_INCREMENT,
    ID_Modele INT NOT NULL,
+   Prix INT NOT NULL,
+   ID_Couleur INT,
    PRIMARY KEY(ID_Velo),
-   FOREIGN KEY(ID_Modele) REFERENCES Type_de_Modele(ID_Modele)
+   FOREIGN KEY(ID_Modele) REFERENCES Type_de_Modele(ID_Modele),
+   FOREIGN KEY(ID_Couleur) REFERENCES Couleur(ID_Couleur)
 );
 
 CREATE TABLE Reparation(
@@ -90,19 +92,11 @@ CREATE TABLE Loue___Contrat(
     ID_Etudiant INT,
     ID_Velo INT,
     AAAA_MM_JJ DATE,
-    Duree_location INT,
-    Tarif NUMERIC(6, 2),
+    Duree_location VARCHAR(50),
+    Tarif VARCHAR(50),
     PRIMARY KEY(ID_Contrat),
     FOREIGN KEY(ID_Etudiant) REFERENCES Etudiant(ID_Etudiant),
     FOREIGN KEY(ID_Velo) REFERENCES Velo(ID_Velo)
-);
-
-CREATE TABLE Est_de_Couleur(
-   ID_Velo INT,
-   ID_Couleur INT,
-   PRIMARY KEY(ID_Velo, ID_Couleur),
-   FOREIGN KEY(ID_Velo) REFERENCES Velo(ID_Velo),
-   FOREIGN KEY(ID_Couleur) REFERENCES Couleur(ID_Couleur)
 );
 
 CREATE TABLE Change_piece(
@@ -182,39 +176,39 @@ INSERT INTO Equipement VALUES(NULL, 'Panier'),
                               (NULL, 'Béquille'),
                               (NULL, 'Lampe');
 
-INSERT INTO Type_de_Modele VALUES(NULL, 'Aeroad',1,20),
-                                 (NULL, 'Grail',1,15),
-                                 (NULL, 'Ultimate',1,25),
-                                 (NULL, 'E-explorer',2,30),
-                                 (NULL, 'Xelius',2,23),
-                                 (NULL, 'Pulsium',2,25),
-                                 (NULL, 'Madone',3,21),
-                                 (NULL, 'Verve',3,26),
-                                 (NULL, 'Marlin',3,24);
+INSERT INTO Type_de_Modele VALUES(NULL, 'Aeroad',1),
+                                 (NULL, 'Grail',1),
+                                 (NULL, 'Ultimate',1),
+                                 (NULL, 'E-explorer',2),
+                                 (NULL, 'Xelius',2),
+                                 (NULL, 'Pulsium',2),
+                                 (NULL, 'Madone',3),
+                                 (NULL, 'Verve',3),
+                                 (NULL, 'Marlin',3);
 
-INSERT INTO Velo VALUES(NULL,1),
-                       (NULL,1),
-                       (NULL,1),
-                       (NULL,2),
-                       (NULL,2),
-                       (NULL,3),
-                       (NULL,3),
-                       (NULL,4),
-                       (NULL,5),
-                       (NULL,5),
-                       (NULL,5),
-                       (NULL,5),
-                       (NULL,6),
-                       (NULL,6),
-                       (NULL,7),
-                       (NULL,7),
-                       (NULL,7),
-                       (NULL,7),
-                       (NULL,8),
-                       (NULL,8),
-                       (NULL,9),
-                       (NULL,9),
-                       (NULL,9);
+INSERT INTO Velo VALUES(NULL,1, 150, 1),
+                       (NULL,1, 135, 1),
+                       (NULL,1, 145, 1),
+                       (NULL,2, 100, 1),
+                       (NULL,2, 110, 1),
+                       (NULL,3, 151, 2),
+                       (NULL,3, 115, 2),
+                       (NULL,4, 148, 2),
+                       (NULL,4, 135, 3),
+                       (NULL,5, 149, 3),
+                       (NULL,5, 132, 4),
+                       (NULL,5, 147, 4),
+                       (NULL,6, 132, 5),
+                       (NULL,6, 116, 5),
+                       (NULL,7, 118, 6),
+                       (NULL,7, 119, 6),
+                       (NULL,7, 139, 7),
+                       (NULL,7, 165, 7),
+                       (NULL,8, 147, 7),
+                       (NULL,8, 138, 8),
+                       (NULL,9, 154, 8),
+                       (NULL,9, 133, 8),
+                       (NULL,9, 140, 8);
 
 INSERT INTO Reparation VALUES(NULL,45,'2024_06_06',1,3),
                              (NULL,25,'2024_04_04',15,2),
@@ -233,34 +227,6 @@ INSERT INTO Change_piece VALUES(8, 6),
                                (2, 5),
                                (1, 6);
 
-INSERT INTO Est_de_Couleur VALUES(23, 8),
-                                 (1, 6),
-                                 (2, 1),
-                                 (3, 8),
-                                 (4, 3),
-                                 (5, 1),
-                                 (6, 5),
-                                 (7, 4),
-                                 (8, 7),
-                                 (9, 1),
-                                 (10, 1),
-                                 (11, 8),
-                                 (12, 2),
-                                 (13, 5),
-                                 (14, 6),
-                                 (15, 4),
-                                 (16, 3),
-                                 (17, 7),
-                                 (18, 3),
-                                 (19, 2),
-                                 (20, 1),
-                                 (21, 8),
-                                 (22, 4),
-                                 (23, 4),
-                                 (6, 6),
-                                 (4, 8),
-                                 (1, 3);
-
 INSERT INTO Est_equippe_de VALUES(21, 1),
                                  (21, 3),
                                  (3, 4),
@@ -271,31 +237,31 @@ INSERT INTO Est_equippe_de VALUES(21, 1),
                                  (19, 4),
                                  (6, 3);
 
-INSERT INTO Loue___Contrat VALUES(NULL,23, 5, '2024-11-14', 2, 35.5),
-                                 (NULL,12, 16, '2024-11-25', 10, 12.0),
-                                 (NULL,5, 18, '2024-09-06', 5, 60.3),
-                                 (NULL,23, 7, '2024-11-18', 2, 38.9),
-                                 (NULL,2, 5, '2024-12-05', 2, 35.5),
-                                 (NULL,19, 5, '2024-11-16', 2, 35.5),
-                                 (NULL,14, 2, '2024-08-09', 5, 7.2),
-                                 (NULL,1, 3, '2024-11-14', 2, 33.5),
-                                 (NULL,4, 9, '2024-04-14', 10, 13.6),
-                                 (NULL,3, 22, '2024-10-01', 2, 35.5),
-                                 (NULL,6, 1, '2024-09-03', 15, 120.0),
-                                 (NULL,18, 17, '2024-04-28', 1, 18.4),
-                                 (NULL,13, 8, '2024-04-05', 2, 30.5),
-                                 (NULL,9, 15, '2024-09-01', 5, 62.6),
-                                 (NULL,7, 13, '2024-08-08', 2, 33.9),
-                                 (NULL,10, 21, '2024-07-07', 12, 50.0),
-                                 (NULL,8, 19, '2024-06-06', 2, 39.5),
-                                 (NULL,15, 4, '2024-11-12', 5, 8.0),
-                                 (NULL,11, 22, '2024-05-05', 10, 15.6),
-                                 (NULL,14, 9, '2024-04-15', 2, 34.5),
-                                 (NULL,16, 20, '2024-11-24', 3, 48.0),
-                                 (NULL,17, 19, '2024-01-01', 100, 1500.0),
-                                 (NULL,20, 11, '2024-03-20', 2, 32.5),
-                                 (NULL,21, 6, '2024-12-01', 5, 7.4),
-                                 (NULL,22, 17, '2024-10-30', 10, 18.1);
+INSERT INTO Loue___Contrat VALUES(NULL,23, 5, '2024-11-14', '2j', '35.5'),
+                                 (NULL,12, 16, '2024-11-25', '10h', '12.0'),
+                                 (NULL,5, 18, '2024-09-06', '5j', '60.3'),
+                                 (NULL,23, 7, '2024-11-18', '2j', '38.9'),
+                                 (NULL,2, 5, '2024-12-05', '2j', '35.5'),
+                                 (NULL,19, 5, '2024-11-16', '2j', '35.5'),
+                                 (NULL,14, 2, '2024-08-09', '5h', '7.2'),
+                                 (NULL,1, 3, '2024-11-14', '2j', '33.5'),
+                                 (NULL,4, 9, '2024-04-14', '10h', '13.6'),
+                                 (NULL,3, 22, '2024-10-01', '2j', '35.5'),
+                                 (NULL,6, 1, '2024-09-03', '15j', '120.0'),
+                                 (NULL,18, 17, '2024-04-28', '1j', '18.4'),
+                                 (NULL,13, 8, '2024-04-05', '2j', '30.5'),
+                                 (NULL,9, 15, '2024-09-01', '5j', '62.6'),
+                                 (NULL,7, 13, '2024-08-08', '2j', '33.9'),
+                                 (NULL,10, 21, '2024-07-07', '12j', '50.0'),
+                                 (NULL,8, 19, '2024-06-06', '2j', '39.5'),
+                                 (NULL,15, 4, '2024-11-12', '5h', '8.0'),
+                                 (NULL,11, 22, '2024-05-05', '10h', '15.6'),
+                                 (NULL,14, 9, '2024-04-15', '2j', '34.5'),
+                                 (NULL,16, 20, '2024-11-24', '3j', '48.0'),
+                                 (NULL,17, 19, '2024-01-01', '100j', '1500.0'),
+                                 (NULL,20, 11, '2024-03-20', '2j', '32.5'),
+                                 (NULL,21, 6, '2024-12-01', '5h', '7.4'),
+                                 (NULL,22, 17, '2024-10-30', '10h', '18.1');
 
 
 
@@ -371,9 +337,9 @@ FROM Velo
          JOIN Loue___Contrat ON Velo.ID_Velo = Loue___Contrat.ID_Velo
 WHERE Loue___Contrat.AAAA_MM_JJ BETWEEN '2024-04-01' AND '2024-04-30';
 
-#affiche les jours ou il y a eu le plus de location en 2024
-SELECT MONTH(Loue___Contrat.AAAA_MM_JJ) AS Jour, COUNT(*) AS Nombre_Locations
+#affiche les mois ou il y a eu le plus de location en 2024
+SELECT MONTH(Loue___Contrat.AAAA_MM_JJ) AS Mois, COUNT(*) AS Nombre_Locations
 FROM Loue___Contrat
 WHERE YEAR(Loue___Contrat.AAAA_MM_JJ) = 2024
-GROUP BY Jour
+GROUP BY Mois
 ORDER BY Nombre_Locations DESC;
