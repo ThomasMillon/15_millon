@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Velo</title>
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {#{{ Velo }}#}
+    {% block title %}
+    <h1>Listes des Vélos</h1>
+    {% endblock %}
+    {% block body %}
+    <a href="/Velo/add">Ajouter un Vélo</a>
+    {% if Velos | length >= 1 %}
+        <table>
+            <tr>
+                <th>Identifiant du Velo</th><th>Identifiant du Modele</th><th>Le Prix</th><th>La Couleur du Velo</th>
+            </tr>
+        {% for Velo in Velos %}
+            <tr>
+                <td>{{ Velo.id_V }}</td>
+                <td>{{ Velo.id_M }}</td>
+                <td>{{ Velo.Prix }}</td>
+                <td>{{ Velo.couleur }}</td>
+
+                <td>
+                    <a href="/Velo/edit?id={{ Velo.id_V }}" type="button" class="btn btn-danger">Editer</a>&nbsp;
+                    <a href="/Velo/delete?id={{ Velo.id_V }}" type="button" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h2> la liste des Velo est vide</h2>
+    {% endif %}
+    {% endblock %}
+
+
+</body>
+</html>

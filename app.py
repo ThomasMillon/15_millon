@@ -377,3 +377,104 @@ def valid_edit_reparation():
 """
 ==========Vélo==========
 """
+@app.route('/Velo/show')
+def show_velo():
+    mycursor = get_db().cursor()
+    sql = '''SELECT ID_Velo AS id_V, Libelle_Modele AS id_M, Prix, Libelle_Couleur AS couleur
+             FROM Velo
+             INNER JOIN Couleur ON Velo.ID_Couleur = Couleur.ID_Couleur
+             INNER JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+             ORDER BY id_V, id_M;'''
+    mycursor.execute(sql)
+
+    Velo = mycursor.fetchall()
+    return render_template('Velo/show_velo.html', Velos=Velo)
+
+@app.route('/Velo/add', methods=['GET'])
+def add_velo():
+
+    mycursor = get_db().cursor()
+    sql = '''SELECT *
+             FROM Velo;'''
+    mycursor.execute(sql)
+
+    Velo = mycursor.fetchall()
+    return render_template('Velo/add_velo.html', Velo=Velo)
+
+@app.route('/Velo/delete')
+def delete_velo():
+    id = request.args.get('id')
+    mycursor = get_db().cursor()
+    sql = '''SELECT ID_Velo
+             FROM Velo
+             WHERE ID_Velo = %s;'''
+    tuple_param = (id)
+    get_db().commit()
+    change = mycursor.execute(sql, tuple_param)
+    if change > 0:
+        message = "Impossible de supprimer la réparation d'id : " + id + " ! Car une instance de l'entité 'Reparation' est utilisé dans l'entité 'Change_piece ! "
+        flash(message, 'alert-warning')
+    else:
+        mycursor = get_db().cursor()
+        sql = '''
+            DELETE FROM Velo WHERE ID_Velo = %s
+            '''
+        tuple_param = (id)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+    return redirect('/Velo/show')
+
+@app.route('/Velo/edit', methods=['GET'])
+def edit_velo():
+    id=request.args.get('id')
+    if id != None:
+        id = int(id)
+        mycursor = get_db().cursor()
+        sql = '''SELECT ID_Velo, ID_Modele, Prix, ID_Couleur
+                 FROM Velo
+                 WHERE ID_Velo = %s;'''
+        tuple_param = (id)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+        Velo = mycursor.fetchone()
+        mycursor = get_db().cursor()
+        sql = '''SELECT ID_Couleur, Libelle_Couleur
+                 FROM Couleur
+                 ORDER BY ID_Couleur;
+                    '''
+        mycursor.execute(sql)
+        couleurs = mycursor.fetchall()
+        sql = '''SELECT ID_Modele, Libelle_Modele
+                 FROM Type_de_Modele
+                 ORDER BY Type_de_Modele.ID_Modele;
+                    '''
+        mycursor.execute(sql)
+        modele = mycursor.fetchall()
+    else:
+        Velo=[]
+    return render_template('Velo/edit_velo.html',modele=modele, couleurs=couleurs, Velo=Velo)
+
+@app.route('/Velo/add', methods=['POST'])
+def valid_add_velo():
+    Prix = request.form.get('prix')
+    id_M = request.form.get('id_M')
+    couleur = request.form.get('couleur')
+    mycursor = get_db().cursor()
+    sql = '''INSERT INTO Velo (Prix, ID_Modele, ID_Couleur) VALUES (%s, %s, %s)'''
+    tuple_param = (Prix, id_M, couleur)
+    mycursor.execute(sql, tuple_param)
+    get_db().commit()
+    return redirect('/Velo/show',)
+
+@app.route('/Velo/edit', methods=['POST'])
+def valid_edit_velo():
+    id_V = request.form.get('id_V')
+    id_M = request.form.get('id_M')
+    prix = request.form.get('prix')
+    couleur = request.form.get('couleur')
+    mycursor = get_db().cursor()
+    sql = '''UPDATE Velo SET ID_Modele = %s, Prix = %s, ID_Couleur = %s WHERE ID_Velo = %s;'''
+    tuple_param = (id_M, prix, couleur, id_V)
+    mycursor.execute(sql, tuple_param)
+    get_db().commit()
+    return redirect('/Velo/show')

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajouter un Velo</title>
+</head>
+<body>
+    <h1>Formulaire du Velo</h1>
+    <form method="post" action="/Velo/add">
+        <label for="prix" class="form-label">Prix du Velo :</label>
+        <input type="text" class="form-control" id="prix" placeholder="Entrez le prix du Velo" required value="{{ Velo.prix }}" name="prix">
+        <br>
+        <label for="id_M" class="form-label">Modele du Velo :</label>
+                <select class="form-select" id="id_M" required name="id_M">
+                    <option value="1">Aeroad</option>
+                    <option value="2">Grail</option>
+                    <option value="3">Ultimate</option>
+                    <option value="4">E-explorer</option>
+                    <option value="5">Xelius</option>
+                    <option value="6">Pulsium</option>
+                    <option value="7">Madone</option>
+                    <option value="8">Verve</option>
+                    <option value="9">Marlin</option>
+                </select>
+        <br>
+        <label for="couleur" class="form-label">Couleur du Velo :</label>
+                <select class="form-select" id="couleur" required name="couleur">
+                    <option value="1">ROUGE</option>
+                    <option value="2">BLEU</option>
+                    <option value="3">ORANGE</option>
+                    <option value="4">ROSE</option>
+                    <option value="5">VERT</option>
+                    <option value="6">JAUNE</option>
+                    <option value="7">VIOLET</option>
+                    <option value="8">BLANC</option>
+                </select>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</body>
+</html>
