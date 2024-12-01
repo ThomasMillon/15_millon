@@ -59,14 +59,14 @@
         <a> La marque la plus demandée le mois dernier était {{ moisDernier[0].Libelle_Marque }} avec {{ moisDernier[0].nbmLoue }} location{% if moisDernier[0].nbmLoue > 1 %}s{% endif %}</a>
 
 
-        <form action="/contrat/filter" method="post">
+        <form action="/contrat/show" method="post">
             <div>
                 <label for="etudiant">Nom de l'etudiant</label>
-                <input type="text" id="etudiant" required value=% name="etudiant">
+                <input type="text" id="etudiant" value="{{ valeurs.etudiant }}" name="etudiant">
             </div>
             <div>
                 <label for="velo">Nom du modele du velo</label>
-                <input type="text" id="velo" required value=% name="velo">
+                <input type="text" id="velo" value="{{ valeurs.velo }}" name="velo">
             </div>
             <div>
                 <label for="date_debut_min">Date de minimale</label>
@@ -94,6 +94,36 @@
             </div>
             <button type="submit">Enregistrer</button>
         </form>
+
+
+        <a>{{ nombreTrouve.nbrElement }} élément{% if nombreTrouve.nbrElement > 1 %}s{% endif %} trouvé{% if nombreTrouve.nbrElement > 1 %}s{% endif %}</a>
+
+        {% if filters | length >= 1 %}
+            <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">id_contrat</th>
+                    <th scope="col">etudiant</th>
+                    <th scope="col">velo</th>
+                    <th scope="col">date_debut_contrat</th>
+                    <th scope="col">duree_location</th>
+                    <th scope="col">tarif</th>
+                  </tr>
+                </thead>
+                {% for filter in filters %}
+                    <tr>
+                        <td>{{ filter.ID_Contrat }}</td>
+                        <td>id {{ filter.ID_Etudiant }} {{ filter.Nom }}</td>
+                        <td>id {{ filter.ID_Velo }} {{ filter.Libelle_Modele }}</td>
+                        <td>{{ filter.AAAA_MM_JJ }}</td>
+                        <td>{{ filter.Duree_location }} jour{% if filter.Duree_location > 1 %}s{% endif %}</td>
+                        <td>{{ filter.Tarif }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        <!--{% else %}
+            <h2> la liste des types est vide </h2>-->
+        {% endif %}
 
 
 

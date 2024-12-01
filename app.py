@@ -40,19 +40,19 @@ if __name__ == '__main__':
 """
 ==========Loue / Contrat==========
 """
-@app.route('/contrat/show', methods=['GET'])
+@app.route('/contrat/show', methods=['GET', 'POST'])
 def show_loue_contrat():
     mycursor = get_db().cursor()
     sql = '''
     SELECT Loue___Contrat.ID_Contrat, Loue___Contrat.ID_Etudiant, Loue___Contrat.ID_Velo, Loue___Contrat.AAAA_MM_JJ, Loue___Contrat.Duree_location, Loue___Contrat.Tarif, Etudiant.Nom, Type_de_Modele.Libelle_Modele
-     FROM Loue___Contrat
-     LEFT JOIN Velo
-     ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+    FROM Loue___Contrat
+    LEFT JOIN Velo
+    ON Loue___Contrat.ID_Velo = Velo.ID_Velo
     JOIN Type_de_Modele
     ON Velo.ID_Modele = Type_de_Modele.ID_Modele
     JOIN Etudiant
     ON Loue___Contrat.ID_Etudiant = Etudiant.ID_Etudiant
-     ORDER BY AAAA_MM_JJ DESC;
+    ORDER BY AAAA_MM_JJ DESC;
      '''
     mycursor.execute(sql)
     Loue___Contrat = mycursor.fetchall()
@@ -73,13 +73,13 @@ def show_loue_contrat():
     meilleureMarque = mycursor.fetchall()
 
     sql = '''
-        SELECT Marque.Libelle_Marque, COUNT(Marque.ID_Marque) AS nbmLoue
-        FROM Loue___Contrat
-        LEFT JOIN Velo
-        ON Loue___Contrat.ID_Velo = Velo.ID_Velo
-        JOIN Type_de_Modele
-        ON Velo.ID_Modele = Type_de_Modele.ID_Modele
-        JOIN Marque
+    SELECT Marque.Libelle_Marque, COUNT(Marque.ID_Marque) AS nbmLoue
+    FROM Loue___Contrat
+    LEFT JOIN Velo
+    ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+    JOIN Type_de_Modele
+    ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+    JOIN Marque
         ON Type_de_Modele.ID_Marque = Marque.ID_Marque
         WHERE MONTH(Loue___Contrat.AAAA_MM_JJ) = MONTH(DATE_ADD(NOW(), INTERVAL -1 MONTH))
         GROUP BY Marque.ID_Marque
@@ -101,7 +101,77 @@ def show_loue_contrat():
     mycursor.execute(sql)
     valeurs = mycursor.fetchone()
 
-    return render_template('loue_contrat/show_loue_contrat.html', contrats=Loue___Contrat, marque=meilleureMarque, moisDernier=moisDernier, valeurs=valeurs)
+    etudiant = request.form.get('etudiant', '')
+    velo = request.form.get('velo', '')
+    date_debut_min = request.form.get('date_debut_min', '')
+    if date_debut_min == '':
+        date_debut_min = valeurs["minDate"]
+    date_debut_max = request.form.get('date_debut_max', '')
+    if date_debut_max == '':
+        date_debut_max = valeurs["maxDate"]
+    duree_min = request.form.get('duree_min', '')
+    if duree_min == '':
+        duree_min = valeurs["minDuree"]
+    duree_max = request.form.get('duree_max', '')
+    if duree_max == '':
+        duree_max = valeurs["maxDuree"]
+    tarif_min = request.form.get('tarif_min', '')
+    if tarif_min == '':
+        tarif_min = valeurs["minTarif"]
+    tarif_max = request.form.get('tarif_max', '')
+    if tarif_max == '':
+        tarif_max = valeurs["maxTarif"]
+
+    valeurs["etudiant"] = etudiant
+    valeurs["velo"] = velo
+    valeurs["minDate"] = date_debut_min
+    valeurs["maxDate"] = date_debut_max
+    valeurs["minDuree"] = duree_min
+    valeurs["maxDuree"] = duree_max
+    valeurs["minTarif"] = tarif_min
+    valeurs["maxTarif"] = tarif_max
+
+    sql = '''
+        SELECT Loue___Contrat.ID_Contrat, Loue___Contrat.ID_Etudiant, Loue___Contrat.ID_Velo, Loue___Contrat.AAAA_MM_JJ, Loue___Contrat.Duree_location, Loue___Contrat.Tarif, Etudiant.Nom, Type_de_Modele.Libelle_Modele
+        FROM Loue___Contrat
+        LEFT JOIN Velo
+        ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+        JOIN Type_de_Modele
+        ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+        JOIN Etudiant
+        ON Loue___Contrat.ID_Etudiant = Etudiant.ID_Etudiant
+        WHERE Etudiant.Nom LIKE %s
+        AND Type_de_Modele.Libelle_Modele LIKE %s
+        AND Loue___Contrat.AAAA_MM_JJ BETWEEN %s AND %s
+        AND Loue___Contrat.Duree_location BETWEEN %s AND %s
+        AND Loue___Contrat.Tarif BETWEEN %s AND %s
+        ORDER BY AAAA_MM_JJ DESC;
+        '''
+    tuple_param = (f'%{etudiant}%', f'%{velo}%', date_debut_min, date_debut_max, duree_min, duree_max, tarif_min, tarif_max)
+    mycursor.execute(sql, tuple_param)
+    filters = mycursor.fetchall()
+
+    sql = '''
+            SELECT COUNT(Loue___Contrat.ID_Contrat) AS nbrElement
+            FROM Loue___Contrat
+            LEFT JOIN Velo
+            ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+            JOIN Type_de_Modele
+            ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+            JOIN Etudiant
+            ON Loue___Contrat.ID_Etudiant = Etudiant.ID_Etudiant
+            WHERE Etudiant.Nom LIKE %s
+            AND Type_de_Modele.Libelle_Modele LIKE %s
+            AND Loue___Contrat.AAAA_MM_JJ BETWEEN %s AND %s
+            AND Loue___Contrat.Duree_location BETWEEN %s AND %s
+            AND Loue___Contrat.Tarif BETWEEN %s AND %s
+            ORDER BY AAAA_MM_JJ DESC;
+            '''
+    tuple_param = (f'%{etudiant}%', f'%{velo}%', date_debut_min, date_debut_max, duree_min, duree_max, tarif_min, tarif_max)
+    mycursor.execute(sql, tuple_param)
+    nbr = mycursor.fetchone()
+
+    return render_template('loue_contrat/show_loue_contrat.html', contrats=Loue___Contrat, marque=meilleureMarque, moisDernier=moisDernier, valeurs=valeurs, filters = filters, nombreTrouve=nbr)
 
 @app.route('/contrat/add', methods=['GET'])
 def add_contrat():
@@ -245,7 +315,42 @@ def valid_edit_contrat():
 
 @app.route('/contrat/filter', methods=['POST'])
 def filter_contrat():
-    id_etu = request.form.get('id_etudiant')
+    mycursor = get_db().cursor()
+    etudiant = request.args.get('etudiant', '')
+    velo = request.args.get('velo', '')
+    date_debut_min = request.args.get('date_debut_min', '')
+
+    date_debut_max = request.args.get('date_debut_max', '')
+
+    duree_min = request.args.get('duree_min', '')
+
+    duree_max = request.args.get('duree_max', '')
+
+    tarif_min = request.args.get('tarif_min', '')
+
+    tarif_max = request.args.get('tarif_max', '')
+
+
+    sql = '''
+            SELECT Loue___Contrat.ID_Contrat, Loue___Contrat.ID_Etudiant, Loue___Contrat.ID_Velo, Loue___Contrat.AAAA_MM_JJ, Loue___Contrat.Duree_location, Loue___Contrat.Tarif, Etudiant.Nom, Type_de_Modele.Libelle_Modele
+            FROM Loue___Contrat
+            LEFT JOIN Velo
+            ON Loue___Contrat.ID_Velo = Velo.ID_Velo
+            JOIN Type_de_Modele
+            ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+            JOIN Etudiant
+            ON Loue___Contrat.ID_Etudiant = Etudiant.ID_Etudiant
+            WHERE Type_de_Modele.Libelle_Modele LIKE %s
+            AND Etudiant.Nom LIKE %s
+            AND Loue___Contrat.AAAA_MM_JJ BETWEEN %s AND %s
+            AND Loue___Contrat.Duree_location BETWEEN %s AND %s
+            AND Loue___Contrat.Tarif BETWEEN %s AND %s
+            ORDER BY AAAA_MM_JJ DESC;
+            '''
+    tuple_param = (
+    f'%{etudiant}%', f'%{velo}%', date_debut_min, date_debut_max, duree_min, duree_max, tarif_min, tarif_max)
+    mycursor.execute(sql, tuple_param)
+    filters = mycursor.fetchall()
 
 
 
