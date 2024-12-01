@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modification des Velo</title>
+</head>
+<body>
+    <h1>Formulaire du Velo</h1>
+    <form action="/Velo/edit" method="post">
+        <input type="hidden" name="id_V" value="{{ Velo.ID_Velo }}" >
+            <div>
+                <label for="prix">Prix du Velo :</label>
+                <input type="number" id="prix" required value="{{ Velo.Prix }}" name="prix">
+            </div>
+            <div>
+                <label for="id_M">Modele du Velo :</label>
+                <select id="id_M" required name="id_M">
+                    {% for id_M in modele %}
+                        <option value="{{ id_M.ID_Modele }}" {% if id_M.ID_Modele == Velo.ID_Modele %}selected{% endif %}>{{ id_M.ID_Modele }} {{ id_M.Libelle_Modele }}</option>
+                    {% endfor %}
+                </select>
+                <!--<input type="text" id="id_M" required value="{{ Velo.ID_Modele }}" name="id_M">-->
+            </div>
+            <div>
+                <label for="couleur">Couleur du Velo :</label>
+                <select id="couleur" required name="couleur">
+                    {% for couleur in couleurs %}
+                        <option value="{{ couleur.ID_Couleur }}" {% if couleur.ID_Couleur == Velo.ID_Couleur %}selected{% endif %}>{{ couleur.ID_Couleur }} {{ couleur.Libelle_Couleur }}</option>
+                    {% endfor %}
+
+                </select>
+                <!--<input type="text" id="couleur" required value="{{ Velo.ID_Couleur }}" name="couleur">-->
+            </div>
+        <input type="submit" value="Enregistrer" name="Enregistrer">
+    </form>
+</body>
+</html>
