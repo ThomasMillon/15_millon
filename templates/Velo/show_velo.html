@@ -22,7 +22,7 @@
         {% for Velo in Velos %}
             <tr>
                 <td>{{ Velo.id_V }}</td>
-                <td>{{ Velo.id_M }}</td>
+                <td>{{ Velo.modele }}</td>
                 <td>{{ Velo.Prix }}</td>
                 <td>{{ Velo.couleur }}</td>
 
@@ -36,6 +36,19 @@
     {% else %}
         <h2> la liste des Velo est vide</h2>
     {% endif %}
+
+    {% if prix_cher %}
+        <p>Le Velo le plus cher est le Velo <b>{{ prix_cher.ID_Velo }} {{ prix_cher.Libelle_Modele }}</b> au prix de {{ prix_cher.Prix_max }}</p>
+    {% else %}
+        <p>Aucun Velo enregisté</p>
+    {% endif %}
+
+    {% if prix_pas_cher %}
+        <p>Le Velo le moins cher est le Velo <b>{{ prix_pas_cher.id_V }} {{ prix_pas_cher.L_M }}</b> au prix de {{ prix_pas_cher.Prix_min }}</p>
+    {% else %}
+        <p>Aucun Velo enregisté</p>
+    {% endif %}
+
     {% endblock %}
 
 
