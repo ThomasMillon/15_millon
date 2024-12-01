@@ -9,7 +9,34 @@
 {% block body %}
     <h3>Table des réparations</h3>
     <a class="btn btn-success" href="/reparation/add">Ajouter une réparation</a>
-    <br><br>
+    <br><br><br>
+
+    <form style="display: flex ; align-items: center ; margin: auto" method="get" action="/reparation/show">
+        <div style="margin: 1%">
+            <label class="form-label" for="filtre_modele">Modèle :</label>
+            <input class="form-control" type="text" id="filtre_modele" name="filtre_modele" value="{{ filtres.filtre_modele }}">
+        </div>
+        <div style="margin: 1%">
+            <label class="form-label" for="filtre_date_min">Date minimale :</label>
+            <input class="form-control" type="date" id="filtre_date_min" name="filtre_date_min" value="{{ filtres.filtre_date_min }}">
+        </div>
+        <div style="margin: 1%">
+            <label class="form-label" for="filtre_date_max">Date maximale :</label>
+            <input class="form-control" type="date" id="filtre_date_max" name="filtre_date_max" value="{{ filtres.filtre_date_max }}">
+        </div>
+        <div style="margin: 1%">
+            <label class="form-label" for="filtre_prix_min">Prix minimum :</label>
+            <input class="form-control" type="number" id="filtre_prix_min" name="filtre_prix_min" value="{{ filtres.filtre_prix_min }}">
+        </div>
+        <div style="margin: 1%">
+            <label class="form-label" for="filtre_prix_max">Prix maximum :</label>
+            <input class="form-control" type="number" id="filtre_prix_max" name="filtre_prix_max" value="{{ filtres.filtre_prix_max }}">
+        </div>
+        <input style="margin: 1% ; height: 50px" class="btn btn-secondary" type="submit" value="Filtre" name="Filtre">
+        <a href="/reparation/show" class="btn btn-danger" style="height: 50px; margin: 1%; display: flex; align-items: center">Annuler</a>
+    </form>
+
+    <br>
 
     <div class="tableau overflow-hidden">
         <table class="table table-dark table-striped">
@@ -86,8 +113,6 @@
             <p>Aucune réparation enregistrée pour l'instant.</p>
         {% endif %}
     </div>
-</div>
-
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

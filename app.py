@@ -202,19 +202,56 @@ def valid_edit_contrat():
 """
 ==========Réparation==========
 """
+
+
 @app.route('/reparation/show', methods=['GET'])
 def show_reparation():
     mycursor = get_db().cursor()
+
+    filtre_modele = request.args.get('filtre_modele', '')
+    filtre_date_min = request.args.get('filtre_date_min', None)
+    filtre_date_max = request.args.get('filtre_date_max', None)
+    filtre_prix_min = request.args.get('filtre_prix_min', None)
+    filtre_prix_max = request.args.get('filtre_prix_max', None)
+
     sql = '''
-    SELECT Reparation.ID_Reparation, Reparation.Prix_Total, Reparation.Date_Reparation, Reparation.ID_Velo, Type_de_Modele.Libelle_Modele, Reparation.ID_Type, TypeReparation.Libelle_Type
-     FROM Reparation
-     JOIN Velo ON Reparation.ID_Velo = Velo.ID_Velo
-     JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
-     JOIN TypeReparation ON Reparation.ID_Type = TypeReparation.ID_Type
-     GROUP BY Reparation.ID_Reparation
-     ORDER BY Date_Reparation DESC'''
-    mycursor.execute(sql)
+    SELECT Reparation.ID_Reparation,
+            Reparation.Prix_Total,
+            Reparation.Date_Reparation,
+            Reparation.ID_Velo,
+            Type_de_Modele.Libelle_Modele,
+            Reparation.ID_Type,
+            TypeReparation.Libelle_Type
+    FROM Reparation
+    JOIN Velo ON Reparation.ID_Velo = Velo.ID_Velo
+    JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+    JOIN TypeReparation ON Reparation.ID_Type = TypeReparation.ID_Type
+    '''
+
+    filtre = []
+
+    if filtre_modele:
+        sql += " AND Type_de_Modele.Libelle_Modele LIKE %s"
+        filtre.append("%" + filtre_modele + "%")
+    if filtre_date_min:
+        sql += " AND Reparation.Date_Reparation >= %s"
+        filtre.append(filtre_date_min)
+    if filtre_date_max:
+        sql += " AND Reparation.Date_Reparation <= %s"
+        filtre.append(filtre_date_max)
+    if filtre_prix_min:
+        sql += " AND Reparation.Prix_Total >= %s"
+        filtre.append(int(filtre_prix_min))
+        print(filtre_prix_min)
+    if filtre_prix_max:
+        sql += " AND Reparation.Prix_Total <= %s"
+        filtre.append(int(filtre_prix_max))
+
+    sql += " ORDER BY Date_Reparation DESC"
+
+    mycursor.execute(sql, filtre)
     Reparation = mycursor.fetchall()
+
     mycursor = get_db().cursor()
     sql = '''
             SELECT Type_de_Modele.Libelle_Modele, COUNT(Reparation.ID_Reparation) AS Nombre_Reparations
@@ -228,7 +265,6 @@ def show_reparation():
     mycursor.execute(sql)
     modele = mycursor.fetchone()
 
-    # Si aucun modèle n'est trouvé (pas de réparations), on envoie un message par défaut
     if modele is None:
         modele = {'Libelle_Modele': 'Aucun modèle', 'Nombre_Reparations': 0}
 
@@ -239,7 +275,6 @@ def show_reparation():
         '''
     mycursor.execute(sql)
     prix_moyen = mycursor.fetchone()
-    print(prix_moyen)
 
     mycursor = get_db().cursor()
     sql = '''
@@ -254,7 +289,16 @@ def show_reparation():
     mycursor.execute(sql)
     modele_cher = mycursor.fetchone()
 
-    return render_template('reparation/show_reparation.html', reparations=Reparation, modele=modele, prix_moyen=prix_moyen, prix_cher=modele_cher)
+    return render_template('reparation/show_reparation.html',
+        reparations=Reparation, modele=modele, prix_moyen=prix_moyen, prix_cher=modele_cher,
+        filtres={
+            'filtre_modele': filtre_modele,
+            'filtre_date_min': filtre_date_min,
+            'filtre_date_max': filtre_date_max,
+            'filtre_prix_min': filtre_prix_min,
+            'filtre_prix_max': filtre_prix_max,
+        }
+    )
 
 
 @app.route('/reparation/add', methods=['GET'])
