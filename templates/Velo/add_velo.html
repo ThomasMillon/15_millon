@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Rajouter un Velo</title>
 </head>
 <body>
+    {% extends 'layout.html' %}
+    {% block title %}
     <h1>Formulaire du Velo</h1>
-    <form method="post" action="/Velo/add">
-        <label for="prix" class="form-label">Prix du Velo :</label>
-        <input type="text" class="form-control" id="prix" placeholder="Entrez le prix du Velo" required value="{{ Velo.Prix }}" name="prix">
-        <br>
-        <label for="id_M" class="form-label">Modele du Velo :</label>
-                <select class="form-select" id="id_M" required name="id_M">
-                    {% for id_M in modele %}
-                        <option value="{{ id_M.ID_Modele }}" {% if id_M.ID_Modele == Velo.ID_Modele %}selected{% endif %}>{{ id_M.ID_Modele }} {{ id_M.Libelle_Modele }}</option>
-                    {% endfor %}
-                </select>
-        <br>
-        <label for="couleur" class="form-label">Couleur du Velo :</label>
-                <select class="form-select" id="couleur" required name="couleur">
-                    {% for couleur in couleurs %}
-                        <option value="{{ couleur.ID_Couleur }}" {% if couleur.ID_Couleur == Velo.ID_Couleur %}selected{% endif %}>{{ couleur.ID_Couleur }} {{ couleur.Libelle_Couleur }}</option>
-                    {% endfor %}
-                </select>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-    </form>
+    {% endblock %}
+    {% block body %}
+        <form class="mb-3" method="post" action="/Velo/add">
+            <label class="form-label" for="prix" class="form-label">Prix du Velo :</label>
+            <input type="text" class="form-control" id="prix" placeholder="Entrez le prix du Velo" required value="{{ Velo.Prix }}" name="prix">
+            <br>
+            <label class="form-label" for="id_M" class="form-label">Modele du Velo :</label>
+                    <select class="form-select" id="id_M" required name="id_M">
+                        {% for id_M in modele %}
+                            <option value="{{ id_M.ID_Modele }}" {% if id_M.ID_Modele == Velo.ID_Modele %}selected{% endif %}>{{ id_M.ID_Modele }} {{ id_M.Libelle_Modele }}</option>
+                        {% endfor %}
+                    </select>
+            <br>
+            <label class="form-label" for="couleur" class="form-label">Couleur du Velo :</label>
+                    <select class="form-select" id="couleur" required name="couleur">
+                        {% for couleur in couleurs %}
+                            <option value="{{ couleur.ID_Couleur }}" {% if couleur.ID_Couleur == Velo.ID_Couleur %}selected{% endif %}>{{ couleur.ID_Couleur }} {{ couleur.Libelle_Couleur }}</option>
+                        {% endfor %}
+                    </select>
+            <button class="form-control" type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
