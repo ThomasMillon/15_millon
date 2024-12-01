@@ -17,6 +17,7 @@
     {% endblock %}
 
     {% block body %}
+        Faire le parametrage d'etat
     <h3>Contrats</h3>
     <a href="/contrat/add">ajouter un contrat</a>
     <br><br>
@@ -26,8 +27,8 @@
                 <thead>
                   <tr>
                     <th scope="col">id_contrat</th>
-                    <th scope="col">id_etudiant</th>
-                    <th scope="col">id_velo</th>
+                    <th scope="col">etudiant</th>
+                    <th scope="col">velo</th>
                     <th scope="col">date_debut_contrat</th>
                     <th scope="col">duree_location</th>
                     <th scope="col">tarif</th>
@@ -37,10 +38,10 @@
                 {% for contrat in contrats %}
                     <tr>
                         <th scope="row">{{ contrat.ID_Contrat }}</th>
-                        <td>{{ contrat.ID_Etudiant }} {{ contrat.Nom }}</td>
-                        <td>{{ contrat.ID_Velo }} {{ contrat.Libelle_Modele }}</td>
+                        <td>id {{ contrat.ID_Etudiant }} {{ contrat.Nom }}</td>
+                        <td>id {{ contrat.ID_Velo }} {{ contrat.Libelle_Modele }}</td>
                         <td>{{ contrat.AAAA_MM_JJ }}</td>
-                        <td>{{ contrat.Duree_location }}</td>
+                        <td>{{ contrat.Duree_location }} jour{% if contrat.Duree_location > 1 %}s{% endif %}</td>
                         <td>{{ contrat.Tarif }}</td>
                         <td>
                             <a href="/contrat/edit?id={{ contrat.ID_Contrat }}" type="button">editer</a>
@@ -53,9 +54,46 @@
             <h2> la liste des types est vide </h2>
         {% endif %}
 
-        <a> La marque la plus demandée ce mois-ci est : {{ marque[0].Libelle_Marque }} avec {{ marque[0].nbmLoue }} location{% if marque[0].nbmLoue > 1 %}s{% endif %}</a>
+        <a> La marque la plus demandée ce mois-ci est {{ marque[0].Libelle_Marque }} avec {{ marque[0].nbmLoue }} location{% if marque[0].nbmLoue > 1 %}s{% endif %}</a>
         <br>
         <a> La marque la plus demandée le mois dernier était {{ moisDernier[0].Libelle_Marque }} avec {{ moisDernier[0].nbmLoue }} location{% if moisDernier[0].nbmLoue > 1 %}s{% endif %}</a>
+
+
+        <form action="/contrat/filter" method="post">
+            <div>
+                <label for="etudiant">Nom de l'etudiant</label>
+                <input type="text" id="etudiant" required value=% name="etudiant">
+            </div>
+            <div>
+                <label for="velo">Nom du modele du velo</label>
+                <input type="text" id="velo" required value=% name="velo">
+            </div>
+            <div>
+                <label for="date_debut_min">Date de minimale</label>
+                <input type="date" id="date_debut_min" required value="{{ valeurs.minDate }}" name="date_debut_min">
+            </div>
+            <div>
+                <label for="date_debut_max">Date maximale</label>
+                <input type="date" id="date_debut_max" required value="{{ valeurs.maxDate }}" name="date_debut_max">
+            </div>
+            <div>
+                <label for="duree_min">Duree du contrat</label>
+                <input type="number" id="duree_min" required value="{{ valeurs.minDuree }}" name="duree_min">
+            </div>
+            <div>
+                <label for="duree_max">Duree du contrat</label>
+                <input type="number" id="duree_max" required value="{{ valeurs.maxDuree }}" name="duree_max">
+            </div>
+            <div>
+                <label for="tarif_min">Tarif du contrat</label>
+                <input type="number" step="0.01" id="tarif_min" required value="{{ valeurs.minTarif }}" name="tarif_min">
+            </div>
+            <div>
+                <label for="tarif_max">Tarif du contrat</label>
+                <input type="number" step="0.01" id="tarif_max" required value="{{ valeurs.maxTarif }}" name="tarif_max">
+            </div>
+            <button type="submit">Enregistrer</button>
+        </form>
 
 
 

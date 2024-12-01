@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Menus déroulants (Contrat)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/_nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/_nav.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reparation/show_reparation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reparation/show_reparation.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +89,7 @@
       <recent name="C:\Users\matgr\Documents\GitHub\Tmillon_Flask" />
     </key>
   </component>
-  <component name="RunManager" selected="PowerShell.launcher.ps1">
+  <component name="RunManager" selected="Database Script.sql_projet.sql">
     <configuration name="sql_projet.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/sql_projet.sql" />
       <script-mode>FILE</script-mode>
@@ -122,7 +118,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PowerShell.launcher.ps1" />
         <item itemvalue="Database Script.sql_projet.sql" />
       </list>
     </recent_temporary>
@@ -149,12 +144,7 @@
       <workItem from="1732778542712" duration="22089000" />
       <workItem from="1732973028654" duration="8983000" />
       <workItem from="1732988472824" duration="360000" />
-      <workItem from="1732989080161" duration="13603000" />
-      <workItem from="1733003410036" duration="121000" />
-      <workItem from="1733054745266" duration="1493000" />
-      <workItem from="1733056649979" duration="249000" />
-      <workItem from="1733056939558" duration="127000" />
-      <workItem from="1733057097977" duration="8312000" />
+      <workItem from="1732989080161" duration="13378000" />
     </task>
     <task id="LOCAL-00001" summary="Création projet + début (layout et navbar)">
       <option name="closed" value="true" />
@@ -236,23 +226,7 @@
       <option name="project" value="LOCAL" />
       <updated>1733001602524</updated>
     </task>
-    <task id="LOCAL-00011" summary="Menus déroulants (Contrat)">
-      <option name="closed" value="true" />
-      <created>1733002841211</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1733002841211</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Menus déroulants (Contrat)">
-      <option name="closed" value="true" />
-      <created>1733054805136</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1733054805136</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

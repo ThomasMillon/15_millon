@@ -7,7 +7,7 @@ app.secret_key = 'une cle(token) : grain de sel(any random string)'
 from flask import session, g
 import pymysql.cursors
 
-#mysql --user=tmillon  --password=mdp --host=serveurmysql --database=BDD_tmillon
+#mysql --user=tmillon  --password=mdp --host=serveurmysql.iut-bm.univ-fcomte.fr --database=BDD_tmillon
 
 
 
@@ -87,7 +87,21 @@ def show_loue_contrat():
         '''
     mycursor.execute(sql)
     moisDernier = mycursor.fetchall()
-    return render_template('loue_contrat/show_loue_contrat.html', contrats=Loue___Contrat, marque=meilleureMarque, moisDernier=moisDernier)
+
+    sql = '''
+        SELECT 
+        MIN(AAAA_MM_JJ) AS minDate, 
+        MAX(AAAA_MM_JJ) AS maxDate, 
+        MIN(Duree_location) AS minDuree, 
+        MAX(Duree_location) AS maxDuree, 
+        MIN(Tarif) AS minTarif, 
+        MAX(Tarif) AS maxTarif
+        FROM Loue___Contrat;
+        '''
+    mycursor.execute(sql)
+    valeurs = mycursor.fetchone()
+
+    return render_template('loue_contrat/show_loue_contrat.html', contrats=Loue___Contrat, marque=meilleureMarque, moisDernier=moisDernier, valeurs=valeurs)
 
 @app.route('/contrat/add', methods=['GET'])
 def add_contrat():
@@ -166,13 +180,31 @@ def valid_add_contrat():
     tarif = request.form.get('tarif', '')
 
     mycursor = get_db().cursor()
-    sql = '''
-    INSERT INTO Loue___Contrat(ID_Contrat, ID_Etudiant, ID_Velo, AAAA_MM_JJ, Duree_location, Tarif) VALUES (NULL, %s, %s, %s, %s, %s);
+    sql='''
+    SELECT COUNT(ID_Contrat)
+    FROM Loue___Contrat
+    WHERE ID_Velo = %s 
+    AND (AAAA_MM_JJ BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY) 
+    OR DATE_ADD(AAAA_MM_JJ, INTERVAL %s DAY) BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY)
+    OR %s BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY)
+    OR DATE_ADD(%s, INTERVAL %s DAY) BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY));
     '''
-    tuple_param = (etudiant, velo, date_debut, duree, tarif)
+    tuple_param = (velo, date_debut, date_debut, duree, duree, date_debut, date_debut, duree, date_debut, date_debut, duree)
     mycursor.execute(sql, tuple_param)
-    get_db().commit()
+    nbContrat = mycursor.fetchone()
+    if nbContrat == 0 :
+
+        sql = '''
+        INSERT INTO Loue___Contrat(ID_Contrat, ID_Etudiant, ID_Velo, AAAA_MM_JJ, Duree_location, Tarif) VALUES (NULL, %s, %s, %s, %s, %s);
+        '''
+        tuple_param = (etudiant, velo, date_debut, duree, tarif)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+    else :
+        message = "Action impossible : Il existe déjà une location pour ce vélo à cette date"
+        flash(message, 'alert-warning')
     return redirect('/contrat/show')
+
 
 
 @app.route('/contrat/edit', methods=['POST'])
@@ -186,12 +218,35 @@ def valid_edit_contrat():
 
     mycursor = get_db().cursor()
     sql = '''
-    UPDATE Loue___Contrat SET ID_Etudiant = %s, ID_Velo = %s, AAAA_MM_JJ = %s, Duree_location = %s, Tarif = %s WHERE ID_Contrat = %s;
-    '''
-    tuple_param = (etudiant, velo, date_debut, duree, tarif, id)
+        SELECT COUNT(ID_Contrat)
+        FROM Loue___Contrat
+        WHERE ID_Velo = %s 
+        AND (AAAA_MM_JJ BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY) 
+        OR DATE_ADD(AAAA_MM_JJ, INTERVAL %s DAY) BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY)
+        OR %s BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY)
+        OR DATE_ADD(%s, INTERVAL %s DAY) BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY));
+        '''
+    tuple_param = (
+    velo, date_debut, date_debut, duree, duree, date_debut, date_debut, duree, date_debut, date_debut, duree)
     mycursor.execute(sql, tuple_param)
-    get_db().commit()
+    nbContrat = mycursor.fetchone()
+    if nbContrat == 0:
+        sql = '''
+        UPDATE Loue___Contrat SET ID_Etudiant = %s, ID_Velo = %s, AAAA_MM_JJ = %s, Duree_location = %s, Tarif = %s WHERE ID_Contrat = %s;
+        '''
+        tuple_param = (etudiant, velo, date_debut, duree, tarif, id)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+    else :
+        message = "Action impossible : Il existe déjà une location pour ce vélo à cette date"
+        flash(message, 'alert-warning')
     return redirect('/contrat/show')
+
+
+@app.route('/contrat/filter', methods=['POST'])
+def filter_contrat():
+    id_etu = request.form.get('id_etudiant')
+
 
 
 """
