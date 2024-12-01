@@ -62,6 +62,7 @@ CREATE TABLE Type_de_Modele(
    ID_Modele INT AUTO_INCREMENT,
    Libelle_Modele VARCHAR(50),
    ID_Marque INT NOT NULL,
+   Vitesse_max INT,
    PRIMARY KEY(ID_Modele),
    FOREIGN KEY(ID_Marque) REFERENCES Marque(ID_Marque)
 );
@@ -181,15 +182,15 @@ INSERT INTO Equipement VALUES(NULL, 'Panier'),
                               (NULL, 'Béquille'),
                               (NULL, 'Lampe');
 
-INSERT INTO Type_de_Modele VALUES(NULL, 'Aeroad',1),
-                                 (NULL, 'Grail',1),
-                                 (NULL, 'Ultimate',1),
-                                 (NULL, 'E-explorer',2),
-                                 (NULL, 'Xelius',2),
-                                 (NULL, 'Pulsium',2),
-                                 (NULL, 'Madone',3),
-                                 (NULL, 'Verve',3),
-                                 (NULL, 'Marlin',3);
+INSERT INTO Type_de_Modele VALUES(NULL, 'Aeroad',1,20),
+                                 (NULL, 'Grail',1,15),
+                                 (NULL, 'Ultimate',1,25),
+                                 (NULL, 'E-explorer',2,30),
+                                 (NULL, 'Xelius',2,23),
+                                 (NULL, 'Pulsium',2,25),
+                                 (NULL, 'Madone',3,21),
+                                 (NULL, 'Verve',3,26),
+                                 (NULL, 'Marlin',3,24);
 
 INSERT INTO Velo VALUES(NULL,1),
                        (NULL,1),
