@@ -526,15 +526,29 @@ def valid_edit_reparation():
 @app.route('/Velo/show')
 def show_velo():
     mycursor = get_db().cursor()
-    sql = '''SELECT ID_Velo AS id_V, Libelle_Modele AS id_M, Prix, Libelle_Couleur AS couleur
+    sql = '''SELECT ID_Velo AS id_V, Libelle_Modele AS modele, Prix, Libelle_Couleur AS couleur
              FROM Velo
              INNER JOIN Couleur ON Velo.ID_Couleur = Couleur.ID_Couleur
              INNER JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
-             ORDER BY id_V, id_M;'''
+             ORDER BY id_V, modele;'''
     mycursor.execute(sql)
 
     Velo = mycursor.fetchall()
-    return render_template('Velo/show_velo.html', Velos=Velo)
+    sql = '''SELECT MIN(Prix) AS Prix_min, ID_Velo AS id_V, Libelle_Modele AS L_M
+             FROM Velo
+             LEFT JOIN  Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+             GROUP BY ID_Velo, Libelle_Modele
+             ORDER BY Prix_min;'''
+    mycursor.execute(sql)
+    prix_pas_cher = mycursor.fetchone()
+    sql = '''SELECT ID_Velo, Libelle_Modele, MAX(Prix) AS Prix_max
+             FROM Velo
+             RIGHT JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+             GROUP BY Velo.ID_Velo, Type_de_Modele.Libelle_Modele
+             ORDER BY Prix_max DESC;'''
+    mycursor.execute(sql)
+    prix_cher = mycursor.fetchone()
+    return render_template('Velo/show_velo.html', prix_pas_cher=prix_pas_cher, prix_cher=prix_cher, Velos=Velo)
 
 @app.route('/Velo/add', methods=['GET'])
 def add_velo():
@@ -545,7 +559,20 @@ def add_velo():
     mycursor.execute(sql)
 
     Velo = mycursor.fetchall()
-    return render_template('Velo/add_velo.html', Velo=Velo)
+    mycursor = get_db().cursor()
+    sql = '''SELECT ID_Couleur, Libelle_Couleur
+                     FROM Couleur
+                     ORDER BY ID_Couleur;
+                        '''
+    mycursor.execute(sql)
+    couleurs = mycursor.fetchall()
+    sql = '''SELECT ID_Modele, Libelle_Modele
+                     FROM Type_de_Modele
+                     ORDER BY Type_de_Modele.ID_Modele;
+                        '''
+    mycursor.execute(sql)
+    modele = mycursor.fetchall()
+    return render_template('Velo/add_velo.html',modele=modele ,couleurs=couleurs, Velo=Velo)
 
 @app.route('/Velo/delete')
 def delete_velo():
@@ -558,7 +585,7 @@ def delete_velo():
     get_db().commit()
     change = mycursor.execute(sql, tuple_param)
     if change > 0:
-        message = "Impossible de supprimer la réparation d'id : " + id + " ! Car une instance de l'entité 'Reparation' est utilisé dans l'entité 'Change_piece ! "
+        message = "Impossible de supprimer le Velo en question : " + id + " ! Car une instance de l'entité 'Velo' est utilisé dans une autre entité "
         flash(message, 'alert-warning')
     else:
         mycursor = get_db().cursor()
