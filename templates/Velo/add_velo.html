@@ -9,31 +9,20 @@
     <h1>Formulaire du Velo</h1>
     <form method="post" action="/Velo/add">
         <label for="prix" class="form-label">Prix du Velo :</label>
-        <input type="text" class="form-control" id="prix" placeholder="Entrez le prix du Velo" required value="{{ Velo.prix }}" name="prix">
+        <input type="text" class="form-control" id="prix" placeholder="Entrez le prix du Velo" required value="{{ Velo.Prix }}" name="prix">
         <br>
         <label for="id_M" class="form-label">Modele du Velo :</label>
                 <select class="form-select" id="id_M" required name="id_M">
-                    <option value="1">Aeroad</option>
-                    <option value="2">Grail</option>
-                    <option value="3">Ultimate</option>
-                    <option value="4">E-explorer</option>
-                    <option value="5">Xelius</option>
-                    <option value="6">Pulsium</option>
-                    <option value="7">Madone</option>
-                    <option value="8">Verve</option>
-                    <option value="9">Marlin</option>
+                    {% for id_M in modele %}
+                        <option value="{{ id_M.ID_Modele }}" {% if id_M.ID_Modele == Velo.ID_Modele %}selected{% endif %}>{{ id_M.ID_Modele }} {{ id_M.Libelle_Modele }}</option>
+                    {% endfor %}
                 </select>
         <br>
         <label for="couleur" class="form-label">Couleur du Velo :</label>
                 <select class="form-select" id="couleur" required name="couleur">
-                    <option value="1">ROUGE</option>
-                    <option value="2">BLEU</option>
-                    <option value="3">ORANGE</option>
-                    <option value="4">ROSE</option>
-                    <option value="5">VERT</option>
-                    <option value="6">JAUNE</option>
-                    <option value="7">VIOLET</option>
-                    <option value="8">BLANC</option>
+                    {% for couleur in couleurs %}
+                        <option value="{{ couleur.ID_Couleur }}" {% if couleur.ID_Couleur == Velo.ID_Couleur %}selected{% endif %}>{{ couleur.ID_Couleur }} {{ couleur.Libelle_Couleur }}</option>
+                    {% endfor %}
                 </select>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     </form>

@@ -198,6 +198,152 @@ def valid_edit_contrat():
 ==========Modèle==========
 """
 
+@app.route('/typedemodele/show', methods=['GET'])
+def show_typedemodele_contrat():
+    mycursor = get_db().cursor()
+    sql = '''
+    SELECT Type_de_Modele.ID_Modele, Type_de_Modele.Libelle_Modele, Type_de_Modele.ID_Marque, Marque.Libelle_Marque, Type_de_Modele.Vitesse_max
+     FROM Type_de_Modele
+     JOIN Marque ON Type_de_Modele.ID_Marque = Marque.ID_Marque
+     ORDER BY Libelle_Modele DESC'''
+    mycursor.execute(sql)
+    Type_de_Modele = mycursor.fetchall()
+    sql = '''
+    SELECT COUNT(Type_de_Modele.ID_Modele) AS nmbre_modele, Type_de_Modele.ID_Marque, Marque.Libelle_Marque
+    FROM Type_de_Modele
+    JOIN Marque ON Type_de_Modele.ID_Marque = Marque.ID_Marque
+    GROUP BY Type_de_Modele.ID_Marque;
+    '''
+    mycursor.execute(sql)
+    nombre_modele_par_marque = mycursor.fetchall()
+    sql = '''
+    SELECT Type_de_Modele.Vitesse_max, Type_de_Modele.Libelle_Modele
+    FROM Type_de_Modele
+    ORDER BY Vitesse_max DESC
+    '''
+    mycursor.execute(sql)
+    veloleplusrapide= mycursor.fetchone()
+    return render_template('type_de_modele/show_type_de_modele.html', modeles=Type_de_Modele, nombre_modele_par_marque=nombre_modele_par_marque, veloleplusrapide=veloleplusrapide)
+
+@app.route('/typedemodele/add', methods=['GET'])
+def add_typedemodele():
+    mycursor = get_db().cursor()
+    sql = '''
+        SELECT ID_Modele, Libelle_Modele, ID_Marque, Vitesse_max
+        FROM Type_de_Modele
+        ORDER BY Libelle_Modele;
+        '''
+    mycursor.execute(sql)
+    modeles = mycursor.fetchall()
+
+    sql = '''
+        SELECT ID_Marque, Libelle_Marque
+        FROM Marque
+        '''
+    mycursor.execute(sql)
+    marques = mycursor.fetchall()
+    return render_template('type_de_modele/add_type_de_modele.html', marques=marques)
+    #print('''affichage du formulaire pour saisir un type de modèle''')
+    #return render_template('type_de_modele/add_type_de_modele.html')
+
+@app.route('/typedemodele/add', methods=['POST'])
+def valid_add_typedemodele():
+    print('''ajout du type de modele dans le tableau''')
+    libelle = request.form.get('libelle')
+    id_marque = request.form.get('id_marque')
+    vitt = request.form.get('vitt')
+
+    message = 'libelle :' + libelle + ' - marque :' + id_marque + ' - vittesse :' + vitt
+    print(message)
+    mycursor = get_db().cursor()
+    sql = ''' 
+    INSERT INTO Type_de_Modele(ID_Modele, Libelle_Modele, ID_Marque,Vitesse_max) VALUES (NULL, %s,%s,%s );
+    '''
+    tuple_param=(libelle, id_marque, vitt)
+    mycursor.execute(sql,tuple_param)
+
+    get_db().commit()
+    return redirect('/typedemodele/show')
+
+@app.route('/typedemodele/delete')
+def delete_typedemodele():
+
+    print('''suppression d'un type de modèle''')
+    print(request.args)
+    print(request.args.get('id'))
+    id=request.args.get('id')
+    mycursor = get_db().cursor()
+    sql='''
+    SELECT COUNT(Velo.ID_Modele) AS velodecemodele FROM Velo WHERE ID_Modele=%s;
+    '''
+    mycursor.execute(sql,id)
+    verif=mycursor.fetchone()
+    verif=verif['velodecemodele']
+    #flash(verif, 'alert-warning')
+    #return redirect('/typedemodele/show')
+    if int(verif)>0:
+        messageerreur="il y a encore un élément de la table vélo qui fait référence à ce modèle"
+        flash(messageerreur, 'alert-warning')
+    else :
+        sql='''
+        DELETE FROM Type_de_Modele WHERE ID_Modele = %s;
+        '''
+        tuple_param=(id)
+        mycursor.execute(sql,tuple_param)
+        get_db().commit()
+    return redirect('/typedemodele/show')
+
+
+
+
+
+
+
+@app.route('/typedemodele/edit', methods=['GET'])
+def edit_typedemodele():
+    id = request.args.get('id', '')
+    if id != None:
+        mycursor = get_db().cursor()
+        sql = '''
+            SELECT ID_Modele, Libelle_Modele, ID_Marque, Vitesse_max
+            FROM Type_de_Modele
+            WHERE ID_Modele = %s;
+            '''
+        tuple_param = (id)
+        mycursor.execute(sql, tuple_param)
+        get_db().commit()
+        modele = mycursor.fetchone()
+        mycursor = get_db().cursor()
+        sql = '''
+                SELECT ID_Marque, Libelle_Marque
+                FROM Marque
+                ORDER BY Libelle_Marque;
+                '''
+        mycursor.execute(sql)
+        marques = mycursor.fetchall()
+    else:
+        modele = []
+    print(modele)
+    return render_template('type_de_modele/edit_type_de_modele.html', modele=modele, marques=marques)
+
+@app.route('/typedemodele/edit', methods=['POST'])
+def valid_edit_typedemodele():
+    id = request.form.get('id')
+    libelle = request.form.get('libelle')
+    id_marque = request.form.get('id_marque')
+    vitt = request.form.get('vitt')
+
+    mycursor = get_db().cursor()
+    sql = '''
+    UPDATE Type_de_Modele SET Libelle_Modele = %s, ID_Marque = %s, Vitesse_max = %s WHERE ID_Modele = %s;
+    '''
+    print(id)
+    tuple_param = (libelle, id_marque, vitt, id)
+    mycursor.execute(sql, tuple_param)
+    get_db().commit()
+    return redirect('/typedemodele/show')
+
+
 
 """
 ==========Réparation==========
@@ -424,15 +570,29 @@ def valid_edit_reparation():
 @app.route('/Velo/show')
 def show_velo():
     mycursor = get_db().cursor()
-    sql = '''SELECT ID_Velo AS id_V, Libelle_Modele AS id_M, Prix, Libelle_Couleur AS couleur
+    sql = '''SELECT ID_Velo AS id_V, Libelle_Modele AS modele, Prix, Libelle_Couleur AS couleur
              FROM Velo
              INNER JOIN Couleur ON Velo.ID_Couleur = Couleur.ID_Couleur
              INNER JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
-             ORDER BY id_V, id_M;'''
+             ORDER BY id_V, modele;'''
     mycursor.execute(sql)
 
     Velo = mycursor.fetchall()
-    return render_template('Velo/show_velo.html', Velos=Velo)
+    sql = '''SELECT MIN(Prix) AS Prix_min, ID_Velo AS id_V, Libelle_Modele AS L_M
+             FROM Velo
+             LEFT JOIN  Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+             GROUP BY ID_Velo, Libelle_Modele
+             ORDER BY Prix_min;'''
+    mycursor.execute(sql)
+    prix_pas_cher = mycursor.fetchone()
+    sql = '''SELECT ID_Velo, Libelle_Modele, MAX(Prix) AS Prix_max
+             FROM Velo
+             RIGHT JOIN Type_de_Modele ON Velo.ID_Modele = Type_de_Modele.ID_Modele
+             GROUP BY Velo.ID_Velo, Type_de_Modele.Libelle_Modele
+             ORDER BY Prix_max DESC;'''
+    mycursor.execute(sql)
+    prix_cher = mycursor.fetchone()
+    return render_template('Velo/show_velo.html', prix_pas_cher=prix_pas_cher, prix_cher=prix_cher, Velos=Velo)
 
 @app.route('/Velo/add', methods=['GET'])
 def add_velo():
@@ -443,7 +603,20 @@ def add_velo():
     mycursor.execute(sql)
 
     Velo = mycursor.fetchall()
-    return render_template('Velo/add_velo.html', Velo=Velo)
+    mycursor = get_db().cursor()
+    sql = '''SELECT ID_Couleur, Libelle_Couleur
+                     FROM Couleur
+                     ORDER BY ID_Couleur;
+                        '''
+    mycursor.execute(sql)
+    couleurs = mycursor.fetchall()
+    sql = '''SELECT ID_Modele, Libelle_Modele
+                     FROM Type_de_Modele
+                     ORDER BY Type_de_Modele.ID_Modele;
+                        '''
+    mycursor.execute(sql)
+    modele = mycursor.fetchall()
+    return render_template('Velo/add_velo.html',modele=modele ,couleurs=couleurs, Velo=Velo)
 
 @app.route('/Velo/delete')
 def delete_velo():
@@ -456,7 +629,7 @@ def delete_velo():
     get_db().commit()
     change = mycursor.execute(sql, tuple_param)
     if change > 0:
-        message = "Impossible de supprimer la réparation d'id : " + id + " ! Car une instance de l'entité 'Reparation' est utilisé dans l'entité 'Change_piece ! "
+        message = "Impossible de supprimer le Velo en question : " + id + " ! Car une instance de l'entité 'Velo' est utilisé dans une autre entité "
         flash(message, 'alert-warning')
     else:
         mycursor = get_db().cursor()

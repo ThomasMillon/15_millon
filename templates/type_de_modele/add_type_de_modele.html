@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire type de modèle</title>
+    <!-- Inclure Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Formulaire type de modèle</h1>
+    <form action="/typedemodele/add" method="post">
+        <!-- Champs pour saisir les informations de l'étudiant -->
+        <div class="mb-3">
+            <label for="libelle" class="form-label">libelle du type de modèle</label>
+            <input type="text" class="form-control" id="libelle" placeholder="Entrez le libelle du type de modèle" required name="libelle">
+            <br>
+            <label for="vitt" class="form-label">vitesse maxi du type de modèle</label>
+            <input type="int" class="form-control" id="vitt" placeholder="Entrez la vitesse max du type de modèle" required name="vitt">
+        </div>
+        <div class="mb-3">
+            <label for="id_marque" class="form-label">Marque :</label>
+            <select class="form-select" id="id_marque" required name="id_marque">
+                <option value="">Séléctionnez une marque</option>
+                {% for marque in marques %}
+                    <option value="{{ marque.ID_Marque }}"> {{ marque.Libelle_Marque }} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+
+<!-- Inclure Bootstrap 5 JS (pour les fonctionnalités supplémentaires) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

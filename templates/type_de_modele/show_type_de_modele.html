@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" >
+    <title>Tableau type de modele</title>
+</head>
+<body>
+
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>afficher les modèles</title>
+{% endblock %}
+
+{% block body %}
+    <h3>Modèle</h3>
+    <a href="/typedemodele/add">ajouter un modele</a>
+    <br><br>
+
+    {% if modeles | length >= 1 %}
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID_Modele</th>
+                <th scope="col">Libelle_Modele</th>
+                <th scope="col">ID_Marque</th>
+                <th scope="col">Libelle_marque</th>
+                <th scope="col">vitesse maxi</th>
+                <th scope="col">Edition</th>
+            </tr>
+            </thead>
+            {% for modele in modeles %}
+                <tr>
+                    <th scope="row">{{ modele.ID_Modele }}</th>
+                    <td>{{ modele.Libelle_Modele }}</td>
+                    <td>{{ modele.ID_Marque }}</td>
+                    <td>{{ modele.Libelle_Marque }}</td>
+                    <td>{{ modele.Vitesse_max }}</td>
+                    <td>
+                        <a href="/typedemodele/edit?id={{ modele.ID_Modele }}" type="button" class="btn btn-warning">editer</a>
+                        <a href="/typedemodele/delete?id={{ modele.ID_Modele }}" type="button" class="btn btn-danger">supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2> la liste des types est vide </h2>
+    {% endif %}
+
+
+    <br>
+
+
+
+    {% for nombre in nombre_modele_par_marque %}
+        <p>La marque {{ nombre['Libelle_Marque'] }} possède {{ nombre['nmbre_modele'] }} modèles</p>
+    {% endfor %}
+    <p>Le modèle le plus rapide est {{ veloleplusrapide.Libelle_Modele }} avec une vitesse de {{ veloleplusrapide.Vitesse_max }}</p>
+
+
+
+
+
+{% endblock %}
+
+
+
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
+
+</body>
+</html>
