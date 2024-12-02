@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Menus déroulants (Contrat)">
+    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Filtre Fonctionnel (Contrat)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_projet.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_projet.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +44,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/ThomasMillon/15_millon.git&quot;,
-    &quot;accountId&quot;: &quot;82f1eff6-e2d6-48ae-80bb-811b64436582&quot;
+    &quot;accountId&quot;: &quot;337baa50-d80a-4d50-a66b-bf32c78c9989&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -95,7 +92,7 @@
       <recent name="C:\Users\matgr\Documents\GitHub\Tmillon_Flask" />
     </key>
   </component>
-  <component name="RunManager" selected="Database Script.sql_projet.sql">
+  <component name="RunManager" selected="Flask server.15_millon">
     <configuration name="sql_projet.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/sql_projet.sql" />
       <script-mode>FILE</script-mode>
@@ -114,6 +111,7 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -122,6 +120,10 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Database Script.sql_projet.sql" />
+      <item itemvalue="Flask server.15_millon" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Database Script.sql_projet.sql" />
@@ -131,8 +133,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
-        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.24807.21" />
+        <option value="bundled-python-sdk-00717045f1d3-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.24807.21" />
       </set>
     </attachedChunks>
   </component>
@@ -151,6 +153,8 @@
       <workItem from="1732973028654" duration="8983000" />
       <workItem from="1732988472824" duration="360000" />
       <workItem from="1732989080161" duration="13378000" />
+      <workItem from="1733123651231" duration="1278000" />
+      <workItem from="1733125367961" duration="1745000" />
     </task>
     <task id="LOCAL-00001" summary="Création projet + début (layout et navbar)">
       <option name="closed" value="true" />
@@ -240,7 +244,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733068044525</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Filtre Fonctionnel (Contrat)">
+      <option name="closed" value="true" />
+      <created>1733078494349</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1733078494349</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,6 +264,7 @@
     <MESSAGE value="Création routes" />
     <MESSAGE value="Fin fonctions de bases (contrat)" />
     <MESSAGE value="Menus déroulants (Contrat)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menus déroulants (Contrat)" />
+    <MESSAGE value="Filtre Fonctionnel (Contrat)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Filtre Fonctionnel (Contrat)" />
   </component>
 </project>

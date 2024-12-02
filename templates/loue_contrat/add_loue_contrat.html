@@ -5,8 +5,11 @@
     <title>Formulaire d'ajout de contrat</title>
 </head>
 <body>
+    {% extends 'layout.html' %}
     <div>
-        <h1>Formulaire d'ajout de contrat</h1>
+        {% block title %}
+            Formulaire d'ajout d'un contrat
+        {% endblock %}
         <form action="/contrat/add" method="post">
             <div> <!--transformer en liste déroulante -->
                 <label for="etudiant">Nom de l'étudiant :</label>
