@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=delete,edit&display=block" />
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" >
     <title>Tableau Contrats</title>
 </head>
@@ -38,14 +39,14 @@
                     {% for contrat in contrats %}
                         <tr>
                             <th scope="row">{{ contrat.ID_Contrat }}</th>
-                            <td>id {{ contrat.ID_Etudiant }} {{ contrat.Nom }}</td>
-                            <td>id {{ contrat.ID_Velo }} {{ contrat.Libelle_Modele }}</td>
+                            <td><div style="background-color: #adb5bd ; color: black ; border-radius: 5% ; width: 25% ; display: flex ; justify-content: center">id {{ contrat.ID_Etudiant }}</div> {{ contrat.Nom }}</td>
+                            <td><div style="background-color: #adb5bd ; color: black ; border-radius: 5% ; width: 25% ; display: flex ; justify-content: center">id {{ contrat.ID_Velo }}</div> {{ contrat.Libelle_Modele }}</td>
                             <td>{{ contrat.AAAA_MM_JJ }}</td>
                             <td>{{ contrat.Duree_location }} jour{% if contrat.Duree_location > 1 %}s{% endif %}</td>
                             <td>{{ contrat.Tarif }}</td>
                             <td>
-                                <a href="/contrat/edit?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-warning">editer</a>
-                                <a href="/contrat/delete?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-danger">supprimer</a>
+                                <a href="/contrat/edit?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-warning"><span class="material-symbols-outlined">edit</span></a>
+                                <a href="/contrat/delete?id={{ contrat.ID_Contrat }}" type="button" class="btn btn-danger"><span class="material-symbols-outlined">delete</span></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -62,7 +63,7 @@
                 <a class="footer-message alert alert-info text-center"> La marque la plus demandée le mois dernier était {{ moisDernier[0].Libelle_Marque }} avec {{ moisDernier[0].nbmLoue }} location{% if moisDernier[0].nbmLoue > 1 %}s{% endif %}</a>
             </div>
 
-            <form style="display: flex ; align-items: center ; flex-direction: column ; margin: 1% ; background-color: #212529 ; color: white ; width: 50% ; padding: 1%" action="/contrat/show" method="post">
+            <form style="display: flex ; align-items: center ; flex-direction: column ; margin: 1% ; background-color: #212529 ; color: white ; width: 50% ; padding: 1% ; border: 1px solid white" action="/contrat/show" method="post">
                 <div style="margin: 1%">
                     <label for="etudiant">Nom de l'etudiant</label>
                     <input type="text" size="15" id="etudiant" value="{{ valeurs.etudiant }}" name="etudiant">
@@ -116,28 +117,30 @@
         <a>{{ nombreTrouve.nbrElement }} élément{% if nombreTrouve.nbrElement > 1 %}s{% endif %} trouvé{% if nombreTrouve.nbrElement > 1 %}s{% endif %}</a>
 
         {% if filters | length >= 1 %}
-            <table class="table table-dark table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">id_contrat</th>
-                    <th scope="col">etudiant</th>
-                    <th scope="col">velo</th>
-                    <th scope="col">debut_contrat</th>
-                    <th scope="col">duree_location</th>
-                    <th scope="col">tarif</th>
-                  </tr>
-                </thead>
-                {% for filter in filters %}
-                    <tr>
-                        <td>{{ filter.ID_Contrat }}</td>
-                        <td>id {{ filter.ID_Etudiant }} {{ filter.Nom }}</td>
-                        <td>id {{ filter.ID_Velo }} {{ filter.Libelle_Modele }}</td>
-                        <td>{{ filter.AAAA_MM_JJ }}</td>
-                        <td>{{ filter.Duree_location }} jour{% if filter.Duree_location > 1 %}s{% endif %}</td>
-                        <td>{{ filter.Tarif }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            <div class="tableau overflow-hidden">
+                <table class="table table-dark table-striped">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">id_contrat</th>
+                        <th scope="col">etudiant</th>
+                        <th scope="col">velo</th>
+                        <th scope="col">debut_contrat</th>
+                        <th scope="col">duree_location</th>
+                        <th scope="col">tarif</th>
+                      </tr>
+                    </thead>
+                    {% for filter in filters %}
+                        <tr>
+                            <td>{{ filter.ID_Contrat }}</td>
+                            <td><div style="background-color: #adb5bd ; color: black ; border-radius: 5% ; width: 25% ; display: flex ; justify-content: center">id {{ filter.ID_Etudiant }}</div> {{ filter.Nom }}</td>
+                            <td><div style="background-color: #adb5bd ; color: black ; border-radius: 5% ; width: 25% ; display: flex ; justify-content: center">id {{ filter.ID_Velo }}</div> {{ filter.Libelle_Modele }}</td>
+                            <td>{{ filter.AAAA_MM_JJ }}</td>
+                            <td>{{ filter.Duree_location }} jour{% if filter.Duree_location > 1 %}s{% endif %}</td>
+                            <td>{{ filter.Tarif }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         <!--{% else %}
             <h2> la liste des types est vide </h2>-->
         {% endif %}

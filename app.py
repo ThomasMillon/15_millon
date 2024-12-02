@@ -251,18 +251,18 @@ def valid_add_contrat():
 
     mycursor = get_db().cursor()
     sql='''
-    SELECT COUNT(ID_Contrat)
-    FROM Loue___Contrat
-    WHERE ID_Velo = %s 
-    AND (AAAA_MM_JJ BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY) 
-    OR DATE_ADD(AAAA_MM_JJ, INTERVAL %s DAY) BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY)
-    OR %s BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY)
-    OR DATE_ADD(%s, INTERVAL %s DAY) BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY));
+    SELECT COUNT(ID_Contrat) AS nb
+        FROM Loue___Contrat
+        WHERE ID_Velo = %s 
+        AND (AAAA_MM_JJ BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY) 
+        OR DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY) BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY)
+        OR %s BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY)
+        OR DATE_ADD(%s, INTERVAL %s DAY) BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY));
     '''
-    tuple_param = (velo, date_debut, date_debut, duree, duree, date_debut, date_debut, duree, date_debut, date_debut, duree)
+    tuple_param = (velo, date_debut, date_debut, duree, date_debut, date_debut, duree, date_debut, date_debut, duree)
     mycursor.execute(sql, tuple_param)
     nbContrat = mycursor.fetchone()
-    if nbContrat == 0 :
+    if nbContrat["nb"] <= 0 :
 
         sql = '''
         INSERT INTO Loue___Contrat(ID_Contrat, ID_Etudiant, ID_Velo, AAAA_MM_JJ, Duree_location, Tarif) VALUES (NULL, %s, %s, %s, %s, %s);
@@ -288,19 +288,18 @@ def valid_edit_contrat():
 
     mycursor = get_db().cursor()
     sql = '''
-        SELECT COUNT(ID_Contrat)
+        SELECT COUNT(ID_Contrat) AS nb
         FROM Loue___Contrat
         WHERE ID_Velo = %s 
         AND (AAAA_MM_JJ BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY) 
-        OR DATE_ADD(AAAA_MM_JJ, INTERVAL %s DAY) BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY)
+        OR DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY) BETWEEN %s AND DATE_ADD(%s, INTERVAL %s DAY)
         OR %s BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY)
         OR DATE_ADD(%s, INTERVAL %s DAY) BETWEEN AAAA_MM_JJ AND DATE_ADD(AAAA_MM_JJ, INTERVAL Duree_location DAY));
         '''
-    tuple_param = (
-    velo, date_debut, date_debut, duree, duree, date_debut, date_debut, duree, date_debut, date_debut, duree)
+    tuple_param = (velo, date_debut, date_debut, duree, date_debut, date_debut, duree, date_debut, date_debut, duree)
     mycursor.execute(sql, tuple_param)
     nbContrat = mycursor.fetchone()
-    if nbContrat == 0:
+    if nbContrat["nb"] <= 0:
         sql = '''
         UPDATE Loue___Contrat SET ID_Etudiant = %s, ID_Velo = %s, AAAA_MM_JJ = %s, Duree_location = %s, Tarif = %s WHERE ID_Contrat = %s;
         '''

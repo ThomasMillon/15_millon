@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Filtre Fonctionnel (Contrat)">
+    <list default="true" id="1d77393e-3a83-42c3-a537-89bf7d814407" name="Changes" comment="Suppression route inutilisée (Contrat)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/mes_styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/mes_styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/add_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/add_loue_contrat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/edit_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/edit_loue_contrat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loue_contrat/show_loue_contrat.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +159,7 @@
       <workItem from="1732988472824" duration="360000" />
       <workItem from="1732989080161" duration="13378000" />
       <workItem from="1733123651231" duration="1278000" />
-      <workItem from="1733125367961" duration="1745000" />
+      <workItem from="1733125367961" duration="11331000" />
     </task>
     <task id="LOCAL-00001" summary="Création projet + début (layout et navbar)">
       <option name="closed" value="true" />
@@ -252,7 +257,23 @@
       <option name="project" value="LOCAL" />
       <updated>1733078494349</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Details">
+      <option name="closed" value="true" />
+      <created>1733127343836</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1733127343836</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Suppression route inutilisée (Contrat)">
+      <option name="closed" value="true" />
+      <created>1733127688628</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1733127688628</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +286,8 @@
     <MESSAGE value="Fin fonctions de bases (contrat)" />
     <MESSAGE value="Menus déroulants (Contrat)" />
     <MESSAGE value="Filtre Fonctionnel (Contrat)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Filtre Fonctionnel (Contrat)" />
+    <MESSAGE value="Details" />
+    <MESSAGE value="Suppression route inutilisée (Contrat)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Suppression route inutilisée (Contrat)" />
   </component>
 </project>

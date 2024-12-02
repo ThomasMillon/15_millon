@@ -5,40 +5,51 @@
     <title>Formulaire d'Edition d'un contrat</title>
 </head>
 <body>
-    <div>
-        <h1>Formulaire d'Edition d'un contrat</h1>
-        <form action="/contrat/edit" method="post">
-            <input type="hidden" name="id" value="{{ contrat.ID_Contrat }}" >
-            <div>
-                <label for="etudiant">ID de l'étudiant</label>
-                <select name="etudiant" required>
-                    {% for etudiant in etudiants %}
-                        <option value="{{ etudiant.ID_Etudiant }}" {% if etudiant.ID_Etudiant == contrat.ID_Etudiant %}selected{% endif %}>{{ etudiant.ID_Etudiant }} {{ etudiant.Nom }} {{ etudiant.Prenom }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="velo">ID du velo</label>
-                <select name="velo" required>
-                    {% for velo in velos %}
-                        <option value="{{ velo.ID_Velo }}" {% if velo.ID_Velo == contrat.ID_Velo %}selected{% endif %}>{{ velo.ID_Velo }} {{ velo.Libelle_Modele }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="date_debut">Date de début du contrat</label>
-                <input type="date" id="date_debut" required value="{{ contrat.AAAA_MM_JJ }}" name="date_debut">
-            </div>
-            <div>
-                <label for="duree">Duree du contrat</label>
-                <input type="number" id="duree" required value="{{ contrat.Duree_location }}" name="duree">
-            </div>
-            <div>
-                <label for="tarif">Tarif du contrat</label>
-                <input type="number" step="0.01" required value="{{ contrat.Tarif }}" name="tarif">
-            </div>
-            <button type="submit">Enregistrer</button>
-        </form>
-    </div>
+    {% extends 'layout.html' %}
+    {% block title %}
+        Formulaire d'edition d'un contrat
+    {% endblock %}
+    {% block body %}
+        <div>
+            <h1>Formulaire d'edition d'un contrat</h1><br>
+            <form class="mb-3" action="/contrat/edit" method="post">
+                <input type="hidden" name="id" value="{{ contrat.ID_Contrat }}" >
+                <div>
+                    <label class="form-label" for="etudiant">ID de l'étudiant</label>
+                    <select class="form-label" name="etudiant" required>
+                        {% for etudiant in etudiants %}
+                            <option value="{{ etudiant.ID_Etudiant }}" {% if etudiant.ID_Etudiant == contrat.ID_Etudiant %}selected{% endif %}>{{ etudiant.ID_Etudiant }} {{ etudiant.Nom }} {{ etudiant.Prenom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label class="form-label" for="velo">ID du velo</label>
+                    <select class="form-label" name="velo" required>
+                        {% for velo in velos %}
+                            <option value="{{ velo.ID_Velo }}" {% if velo.ID_Velo == contrat.ID_Velo %}selected{% endif %}>{{ velo.ID_Velo }} {{ velo.Libelle_Modele }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label class="form-label" for="date_debut">Date de début du contrat</label>
+                    <input type="date" id="date_debut" required value="{{ contrat.AAAA_MM_JJ }}" name="date_debut">
+                </div>
+                <br>
+                <div>
+                    <label class="form-label" for="duree">Duree du contrat</label>
+                    <input class="form-control" type="number" id="duree" required value="{{ contrat.Duree_location }}" name="duree">
+                </div>
+                <br>
+                <div>
+                    <label class="form-label" for="tarif">Tarif du contrat</label>
+                    <input class="form-control" type="number" step="0.01" required value="{{ contrat.Tarif }}" name="tarif">
+                </div>
+                <br>
+                <button class="form-control" type="submit">Enregistrer</button>
+            </form>
+        </div>
+    {% endblock %}
 </body>
 </html>
