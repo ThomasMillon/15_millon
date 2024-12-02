@@ -10,6 +10,7 @@
 </head>
 <body>
     {% extends 'layout.html' %}
+    {% block body %}
 <!--<div class="container mt-4">-->
     <h1>Formulaire -type de modèle</h1>
     <form class="mb-3"action="/typedemodele/edit" method="post">
@@ -34,6 +35,7 @@
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     </form>
 <!--</div>-->
+    {% endblock %}
 
 <!-- Inclure Bootstrap 5 JS (pour les fonctionnalités supplémentaires) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
