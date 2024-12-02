@@ -12,7 +12,7 @@
     {% extends 'layout.html' %}
 <div class="container mt-4">
     <h1>Formulaire -type de modèle</h1>
-    <form action="/typedemodele/edit" method="post">
+    <form class="mb-3"action="/typedemodele/edit" method="post">
         <!-- Champs pour saisir les informations du type de modele -->
         <input type="hidden" name="id" value="{{ modele.ID_Modele }}" >
         <div class="mb-3">
