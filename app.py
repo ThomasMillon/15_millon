@@ -313,45 +313,6 @@ def valid_edit_contrat():
     return redirect('/contrat/show')
 
 
-@app.route('/contrat/filter', methods=['POST'])
-def filter_contrat():
-    mycursor = get_db().cursor()
-    etudiant = request.args.get('etudiant', '')
-    velo = request.args.get('velo', '')
-    date_debut_min = request.args.get('date_debut_min', '')
-
-    date_debut_max = request.args.get('date_debut_max', '')
-
-    duree_min = request.args.get('duree_min', '')
-
-    duree_max = request.args.get('duree_max', '')
-
-    tarif_min = request.args.get('tarif_min', '')
-
-    tarif_max = request.args.get('tarif_max', '')
-
-
-    sql = '''
-            SELECT Loue___Contrat.ID_Contrat, Loue___Contrat.ID_Etudiant, Loue___Contrat.ID_Velo, Loue___Contrat.AAAA_MM_JJ, Loue___Contrat.Duree_location, Loue___Contrat.Tarif, Etudiant.Nom, Type_de_Modele.Libelle_Modele
-            FROM Loue___Contrat
-            LEFT JOIN Velo
-            ON Loue___Contrat.ID_Velo = Velo.ID_Velo
-            JOIN Type_de_Modele
-            ON Velo.ID_Modele = Type_de_Modele.ID_Modele
-            JOIN Etudiant
-            ON Loue___Contrat.ID_Etudiant = Etudiant.ID_Etudiant
-            WHERE Type_de_Modele.Libelle_Modele LIKE %s
-            AND Etudiant.Nom LIKE %s
-            AND Loue___Contrat.AAAA_MM_JJ BETWEEN %s AND %s
-            AND Loue___Contrat.Duree_location BETWEEN %s AND %s
-            AND Loue___Contrat.Tarif BETWEEN %s AND %s
-            ORDER BY AAAA_MM_JJ DESC;
-            '''
-    tuple_param = (
-    f'%{etudiant}%', f'%{velo}%', date_debut_min, date_debut_max, duree_min, duree_max, tarif_min, tarif_max)
-    mycursor.execute(sql, tuple_param)
-    filters = mycursor.fetchall()
-
 
 
 """
